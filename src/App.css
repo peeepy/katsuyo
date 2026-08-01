@@ -1,0 +1,380 @@
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap');
+
+:root {
+  --ink: #221d17; 
+  --ink-soft: #544a3c; 
+  --muted: #8a7b63;
+  --paper: #e9dfc7; 
+  --card: #f4ecd8; 
+  --card-2: #efe4cb;
+  --line: #c9b98e; 
+  --line-soft: #dccfa9;
+  --hanko: #b23a29; 
+  --hanko-dark: #8c2b1d;
+  --indigo: #33465c;
+  --good: #3c6e4a; 
+  --radius: 6px;
+  --shadow: 0 1px 0 rgba(34,29,23,.06), 0 8px 24px -12px rgba(34,29,23,.25);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0; 
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(var(--paper), var(--paper));
+  color: var(--ink);
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 28px 18px 64px;
+}
+
+/* ---------- hero ---------- */
+.hero { text-align: center; margin-bottom: 26px; }
+
+.eyebrow {
+  font-size: .72rem; 
+  letter-spacing: .22em; 
+  text-transform: uppercase;
+  color: var(--hanko); 
+  font-weight: 700; 
+  margin-bottom: 10px;
+}
+
+.title {
+  font-family: inherit; 
+  font-weight: 900;
+  font-size: clamp(2.6rem, 9vw, 4rem); 
+  margin: 0 0 6px;
+  letter-spacing: .04em; 
+  color: var(--ink);
+}
+
+.sub {
+  font-size: 1rem; 
+  color: var(--ink-soft); 
+  margin: 0 0 4px; 
+  font-weight: 700;
+}
+
+/* ---------- cards ---------- */
+.card {
+  background: var(--card); 
+  border: 1px solid var(--line);
+  border-radius: var(--radius); 
+  padding: 22px 20px; 
+  box-shadow: var(--shadow);
+  position: relative;
+}
+
+.card-center {
+  text-align: center;
+  background: repeating-linear-gradient(90deg, transparent, transparent 39px, var(--line-soft) 39px, var(--line-soft) 40px), var(--card);
+}
+
+/* ---------- form rows ---------- */
+.field-group { margin-bottom: 20px; }
+.field-group:last-child { margin-bottom: 0; }
+
+.label {
+  display: block; 
+  font-size: .72rem; 
+  font-weight: 700; 
+  letter-spacing: .08em;
+  text-transform: uppercase; 
+  color: var(--ink-soft); 
+  margin-bottom: 8px;
+}
+
+.input-number {
+  width: 100%; 
+  text-align: center; 
+  font-size: 1.1rem; 
+  font-weight: 700; 
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  border: 1px solid var(--line); 
+  border-radius: var(--radius); 
+  padding: 10px; 
+  background: #fffdf6; 
+  color: var(--ink);
+}
+
+.select {
+  width: 100%; 
+  font-size: .95rem; 
+  padding: 10px 12px; 
+  border-radius: var(--radius);
+  border: 1px solid var(--line); 
+  background: #fffdf6 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="%23544a3c" d="M7 10l5 5 5-5z"/></svg>') no-repeat right 12px center;
+  appearance: none; 
+  -webkit-appearance: none; 
+  color: var(--ink); 
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+}
+
+.select:focus, .input-number:focus, .answer-input:focus {
+  outline: 2px solid var(--indigo); 
+  outline-offset: 1px;
+}
+
+.segmented {
+  display: flex; 
+  border: 1px solid var(--line); 
+  border-radius: var(--radius); 
+  overflow: hidden;
+}
+
+.seg-btn {
+  flex: 1; 
+  padding: 11px 8px; 
+  background: var(--card-2); 
+  border: none; 
+  color: var(--ink-soft);
+  font-size: .85rem; 
+  font-weight: 700; 
+  cursor: pointer; 
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  border-right: 1px solid var(--line);
+}
+
+.seg-btn:last-child { border-right: none; }
+.seg-active { background: var(--indigo); color: #f4ecd8; }
+
+.field-group-row {
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--hanko);
+  cursor: pointer;
+}
+
+/* ---------- buttons ---------- */
+.btn-primary {
+  width: 100%;
+  padding: 13px 16px; 
+  border-radius: var(--radius); 
+  border: 1px solid var(--hanko);
+  font-weight: 700; 
+  font-size: .92rem; 
+  cursor: pointer; 
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  background: var(--hanko); 
+  color: #fbf2e2;
+  margin-top: 10px;
+}
+
+.btn-primary:hover { background: var(--hanko-dark); }
+.btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+
+.btn-primary-compact {
+  width: auto;
+  margin-top: 0;
+  flex: 0 0 auto;
+}
+
+/* ---------- quiz ---------- */
+.quiz-top {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: baseline; 
+  margin-bottom: 14px; 
+  padding: 0 2px;
+}
+
+.streak-label {
+  font-size: .85rem; 
+  font-weight: 700; 
+  color: var(--hanko);
+}
+
+.stimulus {
+  font-size: clamp(2rem, 9vw, 2.7rem); 
+  font-weight: 700;
+  line-height: 1.5; 
+  letter-spacing: .02em; 
+  word-break: keep-all;
+}
+
+.stimulus ruby rt {
+  font-size: .36em; 
+  color: var(--ink-soft); 
+  font-weight: 700;
+}
+
+.instruction {
+  margin-top: 16px; 
+  font-size: 1.4rem; 
+  color: var(--indigo); 
+  font-weight: 700;
+}
+
+.answer-row {
+  display: flex; 
+  gap: 10px; 
+  margin-top: 22px;
+}
+
+.answer-input {
+  flex: 1; 
+  font-size: 1.3rem; 
+  padding: 12px 14px; 
+  border-radius: var(--radius);
+  border: 1px solid var(--line); 
+  background: #fffdf6; 
+  color: var(--ink);
+  letter-spacing: .05em; 
+  font-weight: 500;
+  background-image: repeating-linear-gradient(90deg, transparent, transparent 30px, var(--line-soft) 30px, var(--line-soft) 31px);
+}
+
+.answer-input:disabled { background: var(--card-2); color: var(--muted); }
+
+.feedback {
+  margin-top: 20px; 
+  padding-top: 18px; 
+  border-top: 1px dashed var(--line);
+  display: flex; 
+  align-items: center; 
+  gap: 16px; 
+  text-align: left;
+}
+
+.stamp {
+  font-family: inherit; 
+  font-size: 3.5rem; 
+  font-weight: 800; 
+  line-height: 1;
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  flex-shrink: 0;
+  transform: rotate(-8deg); 
+  animation: stamp-in .28s ease-out;
+}
+
+.stamp-good { color: var(--good); }
+.stamp-bad { color: var(--hanko); transform: rotate(6deg); }
+
+@keyframes stamp-in {
+  from { transform: scale(1.6) rotate(-8deg); opacity: 0; } 
+  to { transform: scale(1) rotate(-8deg); opacity: 1; }
+}
+
+.correct-kana {
+  font-size: 1.3rem; 
+  display: block; 
+  margin-top: 2px; 
+  font-weight: 700;
+}
+
+.correct-romaji {
+  font-size: .78rem; 
+  color: var(--muted); 
+  font-weight: 400;
+}
+
+/* ---------- summary ---------- */
+.score-big {
+  font-size: 3rem; 
+  font-weight: 800; 
+  color: var(--hanko);
+  margin-bottom: 6px;
+}
+
+/* ---------- Settings & Modals ---------- */
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(34, 29, 23, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.modal-content {
+  background: var(--card);
+  padding: 24px;
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 500px;
+  border: 1px solid var(--line);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--ink-soft);
+  font-weight: bold;
+  padding: 10px 16px;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.btn-ghost:hover {
+  background: var(--card-2);
+}
+
+/* ---------- Explanations ---------- */
+.explanation-box {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius);
+  border: 1px solid var(--line-soft);
+}
+
+.explanation-list {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.explanation-list li {
+  margin-bottom: 6px;
+}
+
+/* ---------- Furigana Modes ---------- */
+.ruby-hover rt {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.ruby-hover:hover rt,
+.ruby-hover:active rt {
+  opacity: 1;
+}
