@@ -30,7 +30,9 @@ export type QuizAction =
   | { type: 'SUBMIT_ANSWER' }
   | { type: 'NEXT_QUESTION' }
   | { type: 'UPDATE_SETTINGS'; payload: { settings: DrillSettings, remainingQuestions?: Question[] } }
-  | { type: 'GO_HOME' };
+  | { type: 'GO_HOME' }
+  | { type: 'APPEND_QUESTIONS'; payload: Question[] }
+  | { type: 'END_SESSION' };
 
 export function quizReducer(state: QuizState, action: QuizAction): QuizState {
   switch (action.type) {
@@ -92,6 +94,18 @@ export function quizReducer(state: QuizState, action: QuizAction): QuizState {
       
     case 'GO_HOME':
       return { ...state, status: 'idle' };
+
+    case 'APPEND_QUESTIONS':
+      return {
+        ...state,
+        questions: [...state.questions, ...action.payload]
+      };
+      
+    case 'END_SESSION':
+      return {
+        ...state,
+        status: 'summary'
+      };
       
     default:
       return state;

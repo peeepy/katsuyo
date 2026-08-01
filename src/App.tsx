@@ -3,16 +3,17 @@ import * as wanakana from 'wanakana';
 import './App.css';
 import { type Question, type ConjugationResult, type DrillSettings } from './types';
 import { WORDS } from './data';
-import { generateQuestion, IDENTITY_CHAIN, isValidWordForConvertSettings, isValidWordForSettings } from './engine';
+import { generateQuestion, isValidWordForConvertSettings, isValidWordForSettings } from './engine';
 import { quizReducer, checkIsCorrect, type QuizState } from './quizState';
 
 const DEFAULT_SETTINGS: DrillSettings = {
-  numQuestions: 15,
+  numQuestions: 20,
   focus: '',
-  mode: 'plain',
+  mode: 'combined',
   furigana: 'always',
+  translation: 'always',
   forms: { plain: true, polite: true, negative: true, past: true, te: true, progressive: true, desire: true, volitional: true, potential: true, imperative: true, passive: true, causative: true },
-  wordTypes: { godan: true, ichidan: true, iadj: true, naadj: true, irregular: true }
+  wordTypes: { godan: true, ichidan: true, iadj: true, naadj: true, irrVerb: true, irrAdj: true }
 };
 
 const getEligibleWords = (currentSettings: DrillSettings) => {
@@ -20,22 +21,37 @@ const getEligibleWords = (currentSettings: DrillSettings) => {
     if (!isValidWordForSettings(word, currentSettings)) {
       return false;
     }
-
-    return currentSettings.mode === 'convert'
-      ? isValidWordForConvertSettings(word, currentSettings)
-      : true;
+    if (currentSettings.mode === 'convert' || currentSettings.mode === 'combined') {
+      return isValidWordForConvertSettings(word, currentSettings);
+    }
+    return true;
   });
 };
 
 const createQuestionsList = (count: number, currentSettings: DrillSettings) => {
   const pool = getEligibleWords(currentSettings);
-  if (pool.length === 0) return [];
+  if (pool.length === 0 || count <= 0) return [];
   
-  const shuffled = [...pool].sort(() => Math.random() - 0.5);
+  const shuffledWords = [...pool].sort(() => Math.random() - 0.5);
   const generated: Question[] = [];
+  
+  const focusCount = currentSettings.focus ? Math.floor(count * 0.75) : 0;
+  
+  const intentArray = Array(count).fill(null).map((_, i) => {
+    return i < focusCount ? currentSettings.focus : 'RANDOM';
+  });
+  
+  const shuffledIntents = intentArray.sort(() => Math.random() - 0.5);
+
   for (let i = 0; i < count; i++) {
-    const w = shuffled[i % shuffled.length];
-    generated.push(generateQuestion(w, currentSettings));
+    const w = shuffledWords[i % shuffledWords.length];
+    
+    let qMode = currentSettings.mode;
+    if (qMode === 'combined') {
+      qMode = Math.random() > 0.5 ? 'plain' : 'convert';
+    }
+    
+    generated.push(generateQuestion(w, { ...currentSettings, mode: qMode as 'plain' | 'convert' }, shuffledIntents[i]));
   }
   return generated;
 };
@@ -60,15 +76,19 @@ export default function App() {
   const nextBtnRef = useRef<HTMLButtonElement>(null);
 
   const currentQ = state.questions[state.currentIndex];
-  const isCorrect = state.status === 'graded' ? checkIsCorrect(state.userAnswer, currentQ?.target.reading, currentQ?.target.kanji) : false;
-
+  const isCorrect = state.status === 'graded' 
+    ? (currentQ?.target.validReadings?.includes(state.userAnswer) || checkIsCorrect(state.userAnswer, currentQ?.target.reading, currentQ?.target.kanji)) 
+    : false;
+    
   const startQuiz = () => {
     const pool = getEligibleWords(state.settings);
     if (pool.length === 0) {
-      alert("Please select at least one word type!");
+      alert("pool's empty. select more word types or forms.");
       return;
     }
-    dispatch({ type: 'START', payload: createQuestionsList(state.settings.numQuestions, state.settings) });
+    // If infinite (0), generate an initial batch of 20 to maintain the statistical spread
+    const initialCount = state.settings.numQuestions === 0 ? 20 : state.settings.numQuestions;
+    dispatch({ type: 'START', payload: createQuestionsList(initialCount, state.settings) });
   };
 
   useEffect(() => {
@@ -80,11 +100,29 @@ export default function App() {
     }
   }, [state.status, showSettingsModal]);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Check !showSettingsModal so you don't accidentally nuke the summary page 
+      // if you have the settings modal open over it and press enter
+      if (state.status === 'summary' && e.key === 'Enter' && !showSettingsModal) {
+        e.preventDefault();
+        dispatch({ type: 'GO_HOME' });
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [state.status, showSettingsModal]);
+
   const handleSettingsSave = (newSettings: DrillSettings) => {
     let remainingQuestions;
     if (state.status === 'answering' || state.status === 'graded') {
-      const remainingCount = state.questions.length - (state.currentIndex + 1);
-      if (remainingCount > 0) {
+      if (newSettings.numQuestions === 0) {
+        // Switching to infinite mid-drill
+        remainingQuestions = createQuestionsList(20, newSettings);
+      } else {
+        // Switching to fixed mid-drill (prevents crashing if they lower the number below their current index)
+        const remainingCount = Math.max(0, newSettings.numQuestions - (state.currentIndex + 1));
         remainingQuestions = createQuestionsList(remainingCount, newSettings);
       }
     }
@@ -108,7 +146,21 @@ export default function App() {
   };
 
   return (
-    <div className="container">
+    <div className="container" style={{ position: 'relative' }}>
+      
+      {state.status !== 'idle' && (
+        <div className="header-actions" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          {state.settings.numQuestions === 0 && (state.status === 'answering' || state.status === 'graded') && (
+            <button onClick={() => dispatch({ type: 'END_SESSION' })} className="btn-ghost" style={{ fontSize: '0.85rem', padding: '4px 8px', color: 'var(--hanko)' }}>
+              Stop Drill
+            </button>
+          )}
+          <button onClick={() => setShowSettingsModal(true)} className="btn-ghost" style={{ fontSize: '1.2rem', padding: '4px 8px' }}>
+            ⚙️
+          </button>
+        </div>
+      )}
+
       <header className="hero">
         <div className="eyebrow">Katsuyō · 活用</div>
         <h1 className="title">活用</h1>
@@ -127,7 +179,7 @@ export default function App() {
       {(state.status === 'answering' || state.status === 'graded') && currentQ && (
         <div>
           <div className="quiz-top">
-            <span>問 {state.currentIndex + 1} / {state.questions.length}</span>
+            <span>問 {state.currentIndex + 1} {state.settings.numQuestions === 0 ? ' (∞)' : `/ ${state.questions.length}`}</span>
             <span className="streak-label">streak {state.streak}</span>
           </div>
 
@@ -135,9 +187,15 @@ export default function App() {
             <div className="stimulus">
               {renderRuby(currentQ.source)}
             </div>
+            
+            {state.settings.translation !== 'off' && currentQ.english && (
+              <div className={state.settings.translation === 'hover' ? 'translation-hover' : 'translation'}>
+                {currentQ.english}
+              </div>
+            )}
 
             <div className="instruction">
-              → {currentQ.targetLabel}
+              → {currentQ.instruction}
             </div>
 
             <div className="answer-row">
@@ -162,7 +220,19 @@ export default function App() {
               {state.status === 'answering' ? (
                 <button onClick={() => dispatch({ type: 'SUBMIT_ANSWER' })} className="btn-primary btn-primary-compact">Check</button>
               ) : (
-                <button ref={nextBtnRef} onClick={() => dispatch({ type: 'NEXT_QUESTION' })} className="btn-primary btn-primary-compact">Next</button>
+                <button 
+                  ref={nextBtnRef} 
+                  onClick={() => {
+                    // Silently append the next batch of 20 when they are 3 questions away from the end
+                    if (state.settings.numQuestions === 0 && state.currentIndex >= state.questions.length - 3) {
+                      dispatch({ type: 'APPEND_QUESTIONS', payload: createQuestionsList(20, state.settings) });
+                    }
+                    dispatch({ type: 'NEXT_QUESTION' });
+                  }} 
+                  className="btn-primary btn-primary-compact"
+                >
+                  Next
+                </button>
               )}
             </div>
 
@@ -196,12 +266,6 @@ export default function App() {
                 </div>
               </div>
             )}
-          </div>
-
-          <div style={{ textAlign: 'center', marginTop: 24 }}>
-            <button onClick={() => setShowSettingsModal(true)} className="btn-ghost">
-              ⚙️ Adjust Settings
-            </button>
           </div>
         </div>
       )}
@@ -245,6 +309,16 @@ export default function App() {
 function SettingsModal({ initialSettings, onSave, onClose }: { initialSettings: DrillSettings, onSave: (s: DrillSettings) => void, onClose: () => void }) {
   const [localSettings, setLocalSettings] = useState<DrillSettings>(initialSettings);
   
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
   return (
     <div className="modal-overlay">
       <div className="modal-content">
@@ -265,7 +339,6 @@ function SettingsPanel({ settings, onChange }: { settings: DrillSettings, onChan
   const updateForm = (key: keyof DrillSettings['forms']) => {
     if (key === 'plain' && settings.forms.plain && !settings.forms.polite) return;
     if (key === 'polite' && settings.forms.polite && !settings.forms.plain) return;
-    
     onChange({ ...settings, forms: { ...settings.forms, [key]: !settings.forms[key] } });
   };
 
@@ -275,8 +348,8 @@ function SettingsPanel({ settings, onChange }: { settings: DrillSettings, onChan
   return (
     <div>
       <div className="field-group-row">
-        <label className="label" style={{ marginBottom: 0 }}>Questions</label>
-        <input type="number" min={5} max={100} value={settings.numQuestions} onChange={e => onChange({...settings, numQuestions: Number(e.target.value)})} className="input-number" style={{ width: 80 }} />
+        <label className="label" style={{ marginBottom: 0 }}>Questions (0 = ∞)</label>
+        <input type="number" min={0} max={999} value={settings.numQuestions} onChange={e => onChange({...settings, numQuestions: Number(e.target.value)})} className="input-number" style={{ width: 80 }} />
       </div>
 
       <div className="field-group">
@@ -301,8 +374,9 @@ function SettingsPanel({ settings, onChange }: { settings: DrillSettings, onChan
       <div className="field-group">
         <label className="label">Mode</label>
         <div className="segmented">
-          <button type="button" className={settings.mode === 'plain' ? 'seg-btn seg-active' : 'seg-btn'} onClick={() => onChange({...settings, mode: 'plain'})}>Conjugate Plain</button>
-          <button type="button" className={settings.mode === 'convert' ? 'seg-btn seg-active' : 'seg-btn'} onClick={() => onChange({...settings, mode: 'convert'})}>Convert Form</button>
+          <button type="button" className={settings.mode === 'plain' ? 'seg-btn seg-active' : 'seg-btn'} onClick={() => onChange({...settings, mode: 'plain'})}>Plain</button>
+          <button type="button" className={settings.mode === 'convert' ? 'seg-btn seg-active' : 'seg-btn'} onClick={() => onChange({...settings, mode: 'convert'})}>Convert</button>
+          <button type="button" className={settings.mode === 'combined' ? 'seg-btn seg-active' : 'seg-btn'} onClick={() => onChange({...settings, mode: 'combined'})}>Combined</button>
         </div>
       </div>
 
@@ -312,6 +386,15 @@ function SettingsPanel({ settings, onChange }: { settings: DrillSettings, onChan
           <button type="button" className={settings.furigana === 'always' ? 'seg-btn seg-active' : 'seg-btn'} onClick={() => onChange({...settings, furigana: 'always'})}>Always</button>
           <button type="button" className={settings.furigana === 'hover' ? 'seg-btn seg-active' : 'seg-btn'} onClick={() => onChange({...settings, furigana: 'hover'})}>Hover</button>
           <button type="button" className={settings.furigana === 'off' ? 'seg-btn seg-active' : 'seg-btn'} onClick={() => onChange({...settings, furigana: 'off'})}>Off</button>
+        </div>
+      </div>
+
+      <div className="field-group">
+        <label className="label">Translation</label>
+        <div className="segmented">
+          <button type="button" className={settings.translation === 'always' ? 'seg-btn seg-active' : 'seg-btn'} onClick={() => onChange({...settings, translation: 'always'})}>Always</button>
+          <button type="button" className={settings.translation === 'hover' ? 'seg-btn seg-active' : 'seg-btn'} onClick={() => onChange({...settings, translation: 'hover'})}>Hover</button>
+          <button type="button" className={settings.translation === 'off' ? 'seg-btn seg-active' : 'seg-btn'} onClick={() => onChange({...settings, translation: 'off'})}>Off</button>
         </div>
       </div>
 
@@ -335,7 +418,8 @@ function SettingsPanel({ settings, onChange }: { settings: DrillSettings, onChan
         <label className="checkbox-label"><input type="checkbox" checked={settings.wordTypes.ichidan} onChange={() => updateWordType('ichidan')} /> Ichidan Verbs</label>
         <label className="checkbox-label"><input type="checkbox" checked={settings.wordTypes.iadj} onChange={() => updateWordType('iadj')} /> I-Adjectives</label>
         <label className="checkbox-label"><input type="checkbox" checked={settings.wordTypes.naadj} onChange={() => updateWordType('naadj')} /> Na-Adjectives</label>
-        <label className="checkbox-label"><input type="checkbox" checked={settings.wordTypes.irregular} onChange={() => updateWordType('irregular')} /> Irregulars</label>
+        <label className="checkbox-label"><input type="checkbox" checked={settings.wordTypes.irrVerb} onChange={() => updateWordType('irrVerb')} /> Irregular Verbs</label>
+        <label className="checkbox-label"><input type="checkbox" checked={settings.wordTypes.irrAdj} onChange={() => updateWordType('irrAdj')} /> Irregular Adj</label>
       </div>
     </div>
   );

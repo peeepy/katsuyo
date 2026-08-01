@@ -1,29 +1,4 @@
-// types.ts
-
-export type POS = 'godan' | 'ichidan' | 'iadj' | 'naadj' | 'irregular';
-
-// Track the active conjugation ruleset so the next function knows how to behave
-export type Paradigm = 'godan' | 'ichidan' | 'iadj' | 'naadj' | 'irregular' | 'masu-stem' | 'te-form';
-
-export interface WordState {
-  kanji: string;
-  reading: string;
-  paradigm: Paradigm;
-  chain: string[];
-  label: string;
-}
-
-export interface TargetStructure {
-  voice: 'causative' | 'passive' | 'potential' | 'none';
-  aspect: 'progressive' | 'none';
-  desire: boolean;
-  volitional: boolean;
-  imperative: boolean;
-  polarity: 'positive' | 'negative';
-  politeness: 'plain' | 'polite';
-  tense: 'present' | 'past';
-  te: boolean;
-}
+export type POS = 'godan' | 'ichidan' | 'iadj' | 'naadj' | 'irregular' | 'kuru' | 'suru' | 'iku';
 
 export interface Word {
   kanji: string;
@@ -38,39 +13,24 @@ export interface ConjugationResult {
   furiRoot: string;
   furiReading: string;
   explanation: string[];
+  validReadings: string[];
 }
 
 export interface Question {
   source: ConjugationResult;
   target: ConjugationResult;
-  sourceChain: string; // This fixes your ts(2322) error. It's just a string flag now.
+  sourceChain: string; 
   targetLabel: string;
+  instruction: string;
+  english: string;
 }
 
 export interface DrillSettings {
   numQuestions: number;
   focus: string; 
-  mode: 'plain' | 'convert';
+  mode: 'plain' | 'convert' | 'combined'; // Added combined
   furigana: 'always' | 'hover' | 'off';
-  forms: {
-    plain: boolean;
-    polite: boolean;
-    negative: boolean;
-    past: boolean;
-    te: boolean;
-    progressive: boolean;
-    desire: boolean;
-    volitional: boolean;
-    potential: boolean;
-    imperative: boolean;
-    passive: boolean;
-    causative: boolean;
-  };
-  wordTypes: {
-    godan: boolean;
-    ichidan: boolean;
-    iadj: boolean;
-    naadj: boolean;
-    irregular: boolean;
-  };
+  translation: 'always' | 'hover' | 'off'; // Added translation
+  forms: Record<string, boolean>; 
+  wordTypes: Record<string, boolean>;
 }
