@@ -2,6 +2,59 @@ import { type Question, type ConjugationResult, type DrillSettings, type Word } 
 import { rules } from './utils/rules'; 
 import { generateExplanation } from './utils/explanationGenerator';
 
+function getRuleGroup(word: Word): string {
+  const pos = word.pos.toLowerCase();
+
+  if (pos === 'godan') return 'godan';
+  if (pos === 'ichidan') return 'ichidan';
+  if (pos === 'iadj' || pos === 'i-adjective' || pos === 'i_adjective') return 'i-adjective';
+  if (pos === 'naadj' || pos === 'na-adjective' || pos === 'na_adjective') return 'na-adjective';
+  
+  if (pos.includes('irregular') || pos === 'irreg') {
+    if (word.reading.endsWith('いく') || word.kanji.endsWith('行く')) return 'iku';
+    if (word.reading.endsWith('くる') || word.kanji.endsWith('来る')) return 'kuru';
+    if (word.reading.endsWith('する') || word.kanji.endsWith('する')) return 'suru';
+    if (word.reading.endsWith('いい') || word.reading.endsWith('よい') || word.kanji.endsWith('良い')) return 'ii';
+  }
+
+  // Fallback checks for direct reading endings if POS was improperly tagged
+  if (word.reading.endsWith('いく') || word.kanji.endsWith('行く')) return 'iku';
+  if (word.reading.endsWith('くる') || word.kanji.endsWith('来る')) return 'kuru';
+  if (word.reading.endsWith('する') || word.kanji.endsWith('する')) return 'suru';
+  if (word.reading.endsWith('いい') || word.reading.endsWith('よい') || word.kanji.endsWith('良い')) return 'ii';
+
+  return 'godan';
+}
+
+function isWordTypeActive(word: Word, settings: DrillSettings): boolean {
+  const wt = settings.wordTypes as Record<string, boolean | undefined>;
+  const pos = word.pos.toLowerCase();
+  const group = getRuleGroup(word);
+
+  // Direct toggle check
+  if (wt[word.pos]) return true;
+
+  // Verbs
+  if (group === 'godan' && (wt.godan || wt.godanVerbs)) return true;
+  if (group === 'ichidan' && (wt.ichidan || wt.ichidanVerbs)) return true;
+
+  // Adjectives
+  if (group === 'i-adjective' && (wt.iadj || wt['i-adjective'] || wt.iAdjective || wt.iAdjectives)) return true;
+  if (group === 'na-adjective' && (wt.naadj || wt['na-adjective'] || wt.naAdjective || wt.naAdjectives)) return true;
+
+  // Irregulars
+  const isIrregVerb = ['iku', 'kuru', 'suru'].includes(group);
+  const isIrregAdj = group === 'ii';
+
+  if (isIrregVerb && (wt.irregular || wt.irregularVerb || wt.irregular_verb || wt.irregularVerbs)) return true;
+  if (isIrregAdj) {
+    if (wt.irregular || wt.irregularAdj || wt.irregular_adj || wt.irregularAdjectives) return true;
+    if (wt.iadj || wt['i-adjective'] || wt.iAdjective || wt.iAdjectives) return true;
+  }
+
+  return false;
+}
+
 // Calculates all valid compound rule keys (e.g. "polite past negative") based on the individual settings toggles
 function getValidRuleKeys(settings: DrillSettings, group: string): string[] {
   const groupRules = (rules as any)[group] || {};
@@ -33,7 +86,8 @@ function getValidRuleKeys(settings: DrillSettings, group: string): string[] {
 }
 
 export function isValidWordForSettings(word: Word, settings: DrillSettings): boolean {
-  if (!settings.wordTypes[word.pos as keyof typeof settings.wordTypes]) return false;
+  if (!isWordTypeActive(word, settings)) return false;
+  
   const group = getRuleGroup(word);
   const activeForms = getValidRuleKeys(settings, group);
   
@@ -44,25 +98,10 @@ export function isValidWordForSettings(word: Word, settings: DrillSettings): boo
 }
 
 export function isValidWordForConvertSettings(word: Word, settings: DrillSettings): boolean {
+  if (!isWordTypeActive(word, settings)) return false;
   const group = getRuleGroup(word);
   const activeForms = getValidRuleKeys(settings, group);
   return activeForms.length >= 2;
-}
-
-function getRuleGroup(word: Word): string {
-  if (word.pos === 'godan') return 'godan';
-  if (word.pos === 'ichidan') return 'ichidan';
-  if (word.pos === 'iadj') return 'i-adjective';
-  if (word.pos === 'naadj') return 'na-adjective';
-  
-  if (word.pos === 'irregular') {
-    if (word.reading.endsWith('いく')) return 'iku';
-    if (word.reading.endsWith('くる')) return 'kuru';
-    if (word.reading.endsWith('する')) return 'suru';
-    if (word.reading === 'いい' || word.reading === 'よい') return 'ii';
-  }
-  
-  return 'godan';
 }
 
 export function applyRule(text: string, group: string, formLabel: string, returnType: 'kanji' | 'reading'): string[] {
@@ -73,13 +112,12 @@ export function applyRule(text: string, group: string, formLabel: string, return
     baseText += 'だ';
   }
 
-  // 2. NOW you can safely early-return if the target is just plain/dictionary
+  // 2. Early-return if target is just plain/dictionary
   if (formLabel === 'plain' || formLabel === 'dictionary') {
     return [baseText];
   }
 
   const groupRules = (rules as any)[group];
-  // 3. Make sure to return baseText here instead of text
   if (!groupRules || !(formLabel in groupRules)) return [baseText];
 
   const specificRules = groupRules[formLabel].forms;
@@ -128,11 +166,6 @@ function buildResult(word: Word, group: string, formLabel: string): ConjugationR
   };
 }
 
-// TO DO: Add 'combined' mode that does plain mode and convert mode together.
-// TODO: add separate checkbox for irregular verbs and irregular adjectives in the config
-// TODO: Make the question focus config make the questions 75% of the time focus on the selected form, and 25% of the time focus on a random form.
-// TODO: add english translations - show always, show on hover (below word), turn off - same as furigana
-// TODO: put 'adjust settings' on the right top side.
 function getFormFeatures(label: string): Set<string> {
   const features = new Set<string>();
   if (label === 'plain' || label === 'dictionary') return features;
@@ -159,9 +192,7 @@ function getFormDistance(labelA: string, labelB: string): number {
   return distance;
 }
 
-// Pass the mode in so we know how to format the text
 function generateInstruction(source: string, target: string, mode: string): string {
-  // Plain mode shouldn't use Add/Remove, it should just state the target compound form
   if (mode === 'plain') {
     return `→ ${target}`;
   }
@@ -189,11 +220,9 @@ export function generateQuestion(word: Word, settings: DrillSettings, intent: st
   let targetLabel = 'plain';
   let sourceLabel = 'plain'; 
   
-  // Determine actual target based on intent from the orchestrator
   if (intent !== 'RANDOM' && activeForms.includes(intent.toLowerCase())) {
     targetLabel = intent.toLowerCase();
   } else {
-    // Fallback to random logic if intent is RANDOM or the focused form isn't valid for this word
     targetLabel = activeForms[Math.floor(Math.random() * activeForms.length)];
   }
   
@@ -225,10 +254,7 @@ export function generateQuestion(word: Word, settings: DrillSettings, intent: st
     target,
     sourceChain: sourceLabel, 
     targetLabel: targetLabel,
-    // THE FIX: pass the mode into the instruction generator
     instruction: generateInstruction(sourceLabel, targetLabel, settings.mode),
     english: word.english
   };
 }
-
-export const IDENTITY_CHAIN = "plain";

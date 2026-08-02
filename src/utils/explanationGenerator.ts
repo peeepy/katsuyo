@@ -1,6 +1,6 @@
 import { applyRule } from '../engine';
 
-type StemType = 'dict' | 'masu_stem' | 'nai_stem' | 'te_form' | 'e_stem';
+type StemType = 'dict' | 'masu_stem' | 'nai_stem' | 'te_form' | 'e_stem' | 'i_stem';
 
 interface ChunkRecipe {
   stem: StemType;
@@ -43,9 +43,7 @@ const RECIPES: Record<string, ChunkRecipe> = {
   'negative': { stem: 'nai_stem', chunk: 'ない', name: 'Negative (〜ない)', stemName: 'a-stem (未然形)' },
   'past negative': { stem: 'nai_stem', chunk: 'なかった', name: 'Past Negative (〜なかった)', stemName: 'a-stem (未然形)' },
   'te-form negative': { stem: 'nai_stem', chunk: 'なくて', name: 'Negative Te-form (〜なくて)', stemName: 'a-stem (未然形)' },
-  // Apply the standard polite past negative conjugation rules to 優雅.
-  /// standard polite negative conjugation rules
-  
+
   // --- PASSIVE ---
   'passive': { stem: 'nai_stem', chunk: { godan: 'れる', default: 'られる' }, name: 'Passive', stemName: 'a-stem (未然形)' },
   'passive negative': { stem: 'nai_stem', chunk: { godan: 'れない', default: 'られない' }, name: 'Negative Passive', stemName: 'a-stem (未然形)' },
@@ -67,8 +65,8 @@ const RECIPES: Record<string, ChunkRecipe> = {
   'causative passive': { stem: 'nai_stem', chunk: { godan: 'せられる', default: 'させられる' }, name: 'Causative Passive', stemName: 'a-stem (未然形)' },
   'causative passive negative': { stem: 'nai_stem', chunk: { godan: 'せられない', default: 'させられない' }, name: 'Negative Causative Passive', stemName: 'a-stem (未然形)' },
   'causative passive past': { stem: 'nai_stem', chunk: { godan: 'せられた', default: 'させられた' }, name: 'Past Causative Passive', stemName: 'a-stem (未然形)' },
-  'causative passive negative past': { stem: 'nai_stem', chunk: { godan: 'せられなかった', default: 'させられなかった' }, name: 'Past Negative Causative Passive', stemName: 'a-stem (未然形)' }, // Godan key
-  'causative passive past negative': { stem: 'nai_stem', chunk: { godan: 'せられなかった', default: 'させられなかった' }, name: 'Past Negative Causative Passive', stemName: 'a-stem (未然形)' }, // Ichidan key
+  'causative passive negative past': { stem: 'nai_stem', chunk: { godan: 'せられなかった', default: 'させられなかった' }, name: 'Past Negative Causative Passive', stemName: 'a-stem (未然形)' },
+  'causative passive past negative': { stem: 'nai_stem', chunk: { godan: 'せられなかった', default: 'させられなかった' }, name: 'Past Negative Causative Passive', stemName: 'a-stem (未然形)' },
   
   // --- POTENTIAL ---
   'potential': { stem: 'e_stem', chunk: { godan: 'る', default: 'られる' }, name: 'Potential', stemName: 'e-stem (godan) / masu-stem (ichidan)' },
@@ -78,17 +76,37 @@ const RECIPES: Record<string, ChunkRecipe> = {
   
   // --- IMPERATIVE ---
   'imperative negative': { stem: 'dict', chunk: 'な', name: 'Negative Imperative (〜な)', stemName: 'dictionary form' },
+
+  // --- NA-ADJECTIVES ---
+  'na-adjective polite': { stem: 'dict', chunk: 'です', name: 'Polite (〜です)', stemName: 'dictionary form' },
+  'na-adjective polite negative': { stem: 'dict', chunk: 'ではありません', name: 'Polite Negative (〜ではありません)', stemName: 'dictionary form' },
+  'na-adjective polite past': { stem: 'dict', chunk: 'でした', name: 'Polite Past (〜でした)', stemName: 'dictionary form' },
+  'na-adjective polite past negative': { stem: 'dict', chunk: 'ではありませんでした', name: 'Polite Past Negative (〜ではありませんでした)', stemName: 'dictionary form' },
+
+  // --- I-ADJECTIVES ---
+  'i-adjective negative': { stem: 'i_stem', chunk: 'くない', name: 'Negative (〜くない)', stemName: 'stem (drop い)' },
+  'i-adjective past': { stem: 'i_stem', chunk: 'かった', name: 'Past (〜かった)', stemName: 'stem (drop い)' },
+  'i-adjective past negative': { stem: 'i_stem', chunk: 'くなかった', name: 'Past Negative (〜くなかった)', stemName: 'stem (drop い)' },
+  'i-adjective polite': { stem: 'dict', chunk: 'です', name: 'Polite (〜です)', stemName: 'dictionary form' },
+  'i-adjective polite negative': { stem: 'i_stem', chunk: 'くないです', name: 'Polite Negative (〜くないです)', stemName: 'stem (drop い)' },
+  'i-adjective polite past': { stem: 'i_stem', chunk: 'かったです', name: 'Polite Past (〜かったです)', stemName: 'stem (drop い)' },
+  'i-adjective polite past negative': { stem: 'i_stem', chunk: 'くなかったです', name: 'Polite Past Negative (〜くなかったです)', stemName: 'stem (drop い)' },
+  'i-adjective te-form': { stem: 'i_stem', chunk: 'くて', name: 'Te-form (〜くて)', stemName: 'stem (drop い)' }
 };
 
 export function generateExplanation(dictForm: string, group: string, targetLabel: string): string[] {
   if (targetLabel === 'plain' || targetLabel === 'dictionary') return [];
 
-  // Protect irregular verbs and adjectives from broken string math since they don't follow uniform chunks
-  if (['iku', 'kuru', 'suru', 'ii', 'i-adjective', 'na-adjective'].includes(group)) {
+  // ii is still here because its actually irregular and conjugates to yoi
+  if (['iku', 'kuru', 'suru', 'ii'].includes(group)) {
     return [`Apply the standard ${targetLabel} conjugation rules to ${dictForm}.`];
   }
 
-  const recipe = RECIPES[targetLabel];
+  const recipeKey = (group === 'na-adjective' || group === 'i-adjective') 
+    ? `${group} ${targetLabel}` 
+    : targetLabel;
+  
+  const recipe = RECIPES[recipeKey];
   if (!recipe) {
     return [`Apply the standard ${targetLabel} conjugation rules to ${dictForm}.`];
   }
@@ -105,13 +123,13 @@ export function generateExplanation(dictForm: string, group: string, targetLabel
     stem = applyRule(dictForm, group, 'te-form', 'kanji')[0];
   } else if (recipe.stem === 'e_stem') {
     if (group === 'godan') {
-      // For godan, the e-stem is identical to the imperative form
       stem = applyRule(dictForm, group, 'imperative', 'kanji')[0];
     } else {
-      // For ichidan, potential attaches to the masu-stem
       const politeForm = applyRule(dictForm, group, 'polite', 'kanji')[0];
       stem = politeForm.replace(/ます$/, '');
     }
+  } else if (recipe.stem === 'i_stem') {
+    stem = dictForm.replace(/い$/, '');
   }
 
   let chunkText = '';

@@ -1,13 +1,8 @@
 // Calculate conjugated forms using a rule set
 
-// Should add ある and いる.
-
 export const rules: any = {
-
   "godan": {
-
     "negative": {
-    
       forms: [
         { "before": "る", "after": "らない" },
         { "before": "つ", "after": "たない" },
@@ -20,9 +15,7 @@ export const rules: any = {
         { "before": "む", "after": "まない" },
       ],
     },
-
     "polite": {
-
       forms: [
         { "before": "る", "after": "ります" },
         { "before": "つ", "after": "ちます" },
@@ -35,9 +28,7 @@ export const rules: any = {
         { "before": "む", "after": "みます" },
       ],
     },
-
     "polite negative": {
-
       forms: [
         { "before": "る", "after": "りません" },
         { "before": "つ", "after": "ちません" },
@@ -50,9 +41,7 @@ export const rules: any = {
         { "before": "む", "after": "みません" },
       ],
     },
-
     "past": {
-
       forms: [
         { "before": "る", "after": "った" },
         { "before": "つ", "after": "った" },
@@ -64,12 +53,9 @@ export const rules: any = {
         { "before": "ぶ", "after": "んだ" },
         { "before": "む", "after": "んだ" },
       ],
-
       tetakei: true,
     },
-
     "past negative": {
-
       forms: [
         { "before": "る", "after": "らなかった" },
         { "before": "つ", "after": "たなかった" },
@@ -82,9 +68,7 @@ export const rules: any = {
         { "before": "む", "after": "まなかった" },
       ],
     },
-
     "polite past": {
-      
       forms: [
         { "before": "る", "after": "りました" },
         { "before": "つ", "after": "ちました" },
@@ -97,9 +81,7 @@ export const rules: any = {
         { "before": "む", "after": "みました" },
       ],
     },
-
     "polite past negative": {
-      
       forms: [
         { "before": "る", "after": "りませんでした" },
         { "before": "つ", "after": "ちませんでした" },
@@ -112,9 +94,7 @@ export const rules: any = {
         { "before": "む", "after": "みませんでした" },
       ],
     },
-
     "te-form": {
-      
       forms: [
         { "before": "る", "after": "って" },
         { "before": "つ", "after": "って" },
@@ -126,27 +106,22 @@ export const rules: any = {
         { "before": "ぶ", "after": "んで" },
         { "before": "む", "after": "んで" },
       ],
-
       tetakei: true,
     },
-
     "te-form negative": {
-      
       forms: [
-        { "before": "る", "after": "らなくて"}, { "before": "る", "after": "らないで"},
-        { "before": "つ", "after": "たなくて"}, { "before": "つ", "after": "たないで"},
-        { "before": "う", "after": "わなくて"}, { "before": "う", "after": "わないで"},
-        { "before": "く", "after": "かなくて"}, { "before": "く", "after": "かないで"},
-        { "before": "ぐ", "after": "がなくて"}, { "before": "ぐ", "after": "がないで"},
-        { "before": "す", "after": "さなくて"}, { "before": "す", "after": "さないで"},
-        { "before": "ぬ", "after": "ななくて"}, { "before": "ぬ", "after": "なないで"},
-        { "before": "ぶ", "after": "ばなくて"}, { "before": "ぶ", "after": "ばないで"},
-        { "before": "む", "after": "まなくて"}, { "before": "む", "after": "まないで"},
+        { "before": "る", "after": "らなくて" }, { "before": "る", "after": "らないで" },
+        { "before": "つ", "after": "たなくて" }, { "before": "つ", "after": "たないで" },
+        { "before": "う", "after": "わなくて" }, { "before": "う", "after": "わないで" },
+        { "before": "く", "after": "かなくて" }, { "before": "く", "after": "かないで" },
+        { "before": "ぐ", "after": "がなくて" }, { "before": "ぐ", "after": "がないで" },
+        { "before": "す", "after": "さなくて" }, { "before": "す", "after": "さないで" },
+        { "before": "ぬ", "after": "ななくて" }, { "before": "ぬ", "after": "なないで" },
+        { "before": "ぶ", "after": "ばなくて" }, { "before": "ぶ", "after": "ばないで" },
+        { "before": "む", "after": "まなくて" }, { "before": "む", "after": "まないで" },
       ],
     },
-
     "potential": {
-      
       forms: [
         { "before": "る", "after": "れる" },
         { "before": "つ", "after": "てる" },
@@ -159,9 +134,7 @@ export const rules: any = {
         { "before": "む", "after": "める" },
       ],
     },
-
     "potential negative": {
-      
       forms: [
         { "before": "る", "after": "れない" },
         { "before": "つ", "after": "てない" },
@@ -174,9 +147,7 @@ export const rules: any = {
         { "before": "む", "after": "めない" },
       ],
     },
-
     "polite potential": {
-      
       forms: [
         { "before": "る", "after": "れます" },
         { "before": "つ", "after": "てます" },
@@ -189,9 +160,7 @@ export const rules: any = {
         { "before": "む", "after": "めます" },
       ],
     },
-
     "polite potential negative": {
-      
       forms: [
         { "before": "る", "after": "れません" },
         { "before": "つ", "after": "てません" },
@@ -204,9 +173,7 @@ export const rules: any = {
         { "before": "む", "after": "めません" },
       ],
     },
-
     "passive": {
-      
       forms: [
         { "before": "る", "after": "られる" },
         { "before": "つ", "after": "たれる" },
@@ -219,9 +186,7 @@ export const rules: any = {
         { "before": "む", "after": "まれる" },
       ],
     },
-
     "passive negative": {
-      
       forms: [
         { "before": "る", "after": "られない" },
         { "before": "つ", "after": "たれない" },
@@ -234,9 +199,7 @@ export const rules: any = {
         { "before": "む", "after": "まれない" },
       ],
     },
-
     "passive past": {
-      
       forms: [
         { "before": "る", "after": "られた" },
         { "before": "つ", "after": "たれた" },
@@ -249,9 +212,7 @@ export const rules: any = {
         { "before": "む", "after": "まれた" },
       ],
     },
-
     "passive past negative": {
-      
       forms: [
         { "before": "る", "after": "られなかった" },
         { "before": "つ", "after": "たれなかった" },
@@ -264,9 +225,7 @@ export const rules: any = {
         { "before": "む", "after": "まれなかった" },
       ],
     },
-
     "passive te-form": {
-      
       forms: [
         { "before": "る", "after": "られて" },
         { "before": "つ", "after": "たれて" },
@@ -279,9 +238,7 @@ export const rules: any = {
         { "before": "む", "after": "まれて" },
       ],
     },
-
     "polite passive": {
-      
       forms: [
         { "before": "る", "after": "られます" },
         { "before": "つ", "after": "たれます" },
@@ -294,9 +251,7 @@ export const rules: any = {
         { "before": "む", "after": "まれます" },
       ],
     },
-
     "polite passive negative": {
-      
       forms: [
         { "before": "る", "after": "られません" },
         { "before": "つ", "after": "たれません" },
@@ -309,9 +264,7 @@ export const rules: any = {
         { "before": "む", "after": "まれません" },
       ],
     },
-
     "polite passive past": {
-      
       forms: [
         { "before": "る", "after": "られました" },
         { "before": "つ", "after": "たれました" },
@@ -324,9 +277,7 @@ export const rules: any = {
         { "before": "む", "after": "まれました" },
       ],
     },
-
     "polite passive past negative": {
-      
       forms: [
         { "before": "る", "after": "られませんでした" },
         { "before": "つ", "after": "たれませんでした" },
@@ -339,9 +290,7 @@ export const rules: any = {
         { "before": "む", "after": "まれませんでした" },
       ],
     },
-
     "causative": {
-      
       forms: [
         { "before": "る", "after": "らせる" },
         { "before": "つ", "after": "たせる" },
@@ -354,9 +303,7 @@ export const rules: any = {
         { "before": "む", "after": "ませる" },
       ],
     },
-
     "causative negative": {
-      
       forms: [
         { "before": "る", "after": "らせない" },
         { "before": "つ", "after": "たせない" },
@@ -369,9 +316,7 @@ export const rules: any = {
         { "before": "む", "after": "ませない" },
       ],
     },
-
     "causative past": {
-      
       forms: [
         { "before": "る", "after": "らせた" },
         { "before": "つ", "after": "たせた" },
@@ -384,9 +329,7 @@ export const rules: any = {
         { "before": "む", "after": "ませた" },
       ],
     },
-
     "causative past negative": {
-      
       forms: [
         { "before": "る", "after": "らせなかった" },
         { "before": "つ", "after": "たせなかった" },
@@ -399,9 +342,7 @@ export const rules: any = {
         { "before": "む", "after": "ませなかった" },
       ],
     },
-
     "causative passive": {
-      
       forms: [
         { "before": "る", "after": "らせられる" },
         { "before": "つ", "after": "たせられる" },
@@ -414,9 +355,7 @@ export const rules: any = {
         { "before": "む", "after": "ませられる" },
       ],
     },
-
     "causative passive negative": {
-      
       forms: [
         { "before": "る", "after": "らせられない" },
         { "before": "つ", "after": "たせられない" },
@@ -429,9 +368,7 @@ export const rules: any = {
         { "before": "む", "after": "ませられない" },
       ],
     },
-
     "causative passive past": {
-      
       forms: [
         { "before": "る", "after": "らせられた" },
         { "before": "つ", "after": "たせられた" },
@@ -444,9 +381,7 @@ export const rules: any = {
         { "before": "む", "after": "ませられた" },
       ],
     },
-
     "causative passive negative past": {
-      
       forms: [
         { "before": "る", "after": "らせられなかった" },
         { "before": "つ", "after": "たせられなかった" },
@@ -459,9 +394,7 @@ export const rules: any = {
         { "before": "む", "after": "ませられなかった" },
       ],
     },
-
     "imperative": {
-      
       forms: [
         { "before": "る", "after": "れ" },
         { "before": "つ", "after": "て" },
@@ -474,9 +407,7 @@ export const rules: any = {
         { "before": "む", "after": "め" },
       ],
     },
-
     "imperative negative": {
-      
       forms: [
         { "before": "る", "after": "るな" },
         { "before": "つ", "after": "つな" },
@@ -489,9 +420,7 @@ export const rules: any = {
         { "before": "む", "after": "むな" },
       ],
     },
-
     "progressive": {
-      
       forms: [
         { "before": "る", "after": "っている" },
         { "before": "つ", "after": "っている" },
@@ -503,12 +432,9 @@ export const rules: any = {
         { "before": "ぶ", "after": "んでいる" },
         { "before": "む", "after": "んでいる" },
       ],
-
       tetakei: true,
     },
-
     "progressive negative": {
-      
       forms: [
         { "before": "る", "after": "っていない" },
         { "before": "つ", "after": "っていない" },
@@ -520,12 +446,9 @@ export const rules: any = {
         { "before": "ぶ", "after": "んでいない" },
         { "before": "む", "after": "んでいない" },
       ],
-
       tetakei: true,
     },
-
     "polite progressive": {
-      
       forms: [
         { "before": "る", "after": "っています" },
         { "before": "つ", "after": "っています" },
@@ -537,12 +460,9 @@ export const rules: any = {
         { "before": "ぶ", "after": "んでいます" },
         { "before": "む", "after": "んでいます" },
       ],
-
       tetakei: true,
     },
-
     "polite progressive negative": {
-      
       forms: [
         { "before": "る", "after": "っていません" },
         { "before": "つ", "after": "っていません" },
@@ -554,12 +474,9 @@ export const rules: any = {
         { "before": "ぶ", "after": "んでいません" },
         { "before": "む", "after": "んでいません" },
       ],
-
       tetakei: true,
     },
-
     "progressive past": {
-      
       forms: [
         { "before": "る", "after": "っていた" },
         { "before": "つ", "after": "っていた" },
@@ -571,12 +488,9 @@ export const rules: any = {
         { "before": "ぶ", "after": "んでいた" },
         { "before": "む", "after": "んでいた" },
       ],
-
       tetakei: true,
     },
-
     "progressive past negative": {
-      
       forms: [
         { "before": "る", "after": "っていなかった" },
         { "before": "つ", "after": "っていなかった" },
@@ -588,12 +502,9 @@ export const rules: any = {
         { "before": "ぶ", "after": "んでいなかった" },
         { "before": "む", "after": "んでいなかった" },
       ],
-
       tetakei: true,
     },
-
     "polite progressive past": {
-      
       forms: [
         { "before": "る", "after": "っていました" },
         { "before": "つ", "after": "っていました" },
@@ -605,12 +516,9 @@ export const rules: any = {
         { "before": "ぶ", "after": "んでいました" },
         { "before": "む", "after": "んでいました" },
       ],
-
       tetakei: true,
     },
-
     "polite progressive past negative": {
-      
       forms: [
         { "before": "る", "after": "っていませんでした" },
         { "before": "つ", "after": "っていませんでした" },
@@ -622,12 +530,9 @@ export const rules: any = {
         { "before": "ぶ", "after": "んでいませんでした" },
         { "before": "む", "after": "んでいませんでした" },
       ],
-
       tetakei: true,
     },
-
     "desire": {
-      
       forms: [
         { "before": "る", "after": "りたい" },
         { "before": "つ", "after": "ちたい" },
@@ -640,9 +545,7 @@ export const rules: any = {
         { "before": "む", "after": "みたい" },
       ],
     },
-
     "desire negative": {
-      
       forms: [
         { "before": "る", "after": "りたくない" },
         { "before": "つ", "after": "ちたくない" },
@@ -655,9 +558,7 @@ export const rules: any = {
         { "before": "む", "after": "みたくない" },
       ],
     },
-
     "desire past": {
-      
       forms: [
         { "before": "る", "after": "りたかった" },
         { "before": "つ", "after": "ちたかった" },
@@ -670,9 +571,7 @@ export const rules: any = {
         { "before": "む", "after": "みたかった" },
       ],
     },
-
     "desire past negative": {
-      
       forms: [
         { "before": "る", "after": "りたくなかった" },
         { "before": "つ", "after": "ちたくなかった" },
@@ -685,9 +584,7 @@ export const rules: any = {
         { "before": "む", "after": "みたくなかった" },
       ],
     },
-    
     "desire te-form": {
-      
       forms: [
         { "before": "る", "after": "りたくて" },
         { "before": "つ", "after": "ちたくて" },
@@ -700,9 +597,7 @@ export const rules: any = {
         { "before": "む", "after": "みたくて" },
       ],
     },
-    
     "desire te-form negative": {
-      
       forms: [
         { "before": "る", "after": "りたくなくて" },
         { "before": "つ", "after": "ちたくなくて" },
@@ -715,9 +610,7 @@ export const rules: any = {
         { "before": "む", "after": "みたくなくて" },
       ],
     },
-
     "desire polite": {
-      
       forms: [
         { "before": "る", "after": "りたいです" },
         { "before": "つ", "after": "ちたいです" },
@@ -730,9 +623,7 @@ export const rules: any = {
         { "before": "む", "after": "みたいです" },
       ],
     },
-
     "desire polite negative": {
-      
       forms: [
         { "before": "る", "after": "りたくないです" },
         { "before": "つ", "after": "ちたくないです" },
@@ -745,9 +636,7 @@ export const rules: any = {
         { "before": "む", "after": "みたくないです" },
       ],
     },
-
     "desire polite past": {
-      
       forms: [
         { "before": "る", "after": "りたかったです" },
         { "before": "つ", "after": "ちたかったです" },
@@ -760,9 +649,7 @@ export const rules: any = {
         { "before": "む", "after": "みたかったです" },
       ],
     },
-
     "desire polite past negative": {
-      
       forms: [
         { "before": "る", "after": "りたくなかったです" },
         { "before": "つ", "after": "ちたくなかったです" },
@@ -775,9 +662,7 @@ export const rules: any = {
         { "before": "む", "after": "みたくなかったです" },
       ],
     },
-
     "volitional": {
-      
       forms: [
         { "before": "る", "after": "ろう" },
         { "before": "つ", "after": "とう" },
@@ -790,9 +675,7 @@ export const rules: any = {
         { "before": "む", "after": "もう" },
       ],
     },
-
     "polite volitional": {
-
       forms: [
         { "before": "る", "after": "りましょう" },
         { "before": "つ", "after": "ちましょう" },
@@ -808,248 +691,252 @@ export const rules: any = {
   },
 
   "ichidan": {
-
-    "negative": { forms: [ { "before": "る", "after": "ない" }, ], },
-    "polite": { forms: [ { "before": "る", "after": "ます" }, ], },
-    "polite negative": { forms: [ { "before": "る", "after": "ません" }, ], },
-    "past": { forms: [ { "before": "る", "after": "た" }, ], },
-    "past negative": { forms: [ { "before": "る", "after": "なかった" }, ], },
-    "polite past": { forms: [ { "before": "る", "after": "ました" }, ], },
-    "polite past negative": { forms: [ { "before": "る", "after": "ませんでした" }, ], },
-    "te-form": { forms: [ { "before": "る", "after": "て" }, ], },
-    "te-form negative": { forms: [ { "before": "る", "after": "なくて" }, { "before": "る", "after": "ないで" } ], },
+    "negative": { forms: [ { "before": "る", "after": "ない" } ] },
+    "polite": { forms: [ { "before": "る", "after": "ます" } ] },
+    "polite negative": { forms: [ { "before": "る", "after": "ません" } ] },
+    "past": { forms: [ { "before": "る", "after": "た" } ] },
+    "past negative": { forms: [ { "before": "る", "after": "なかった" } ] },
+    "polite past": { forms: [ { "before": "る", "after": "ました" } ] },
+    "polite past negative": { forms: [ { "before": "る", "after": "ませんでした" } ] },
+    "te-form": { forms: [ { "before": "る", "after": "て" } ] },
+    "te-form negative": { forms: [ { "before": "る", "after": "なくて" }, { "before": "る", "after": "ないで" } ] },
     "potential": { forms: [ { "before": "る", "after": "られる" }, { "before": "る", "after": "れる" } ] },
-    "potential negative": { forms: [ { "before": "る", "after": "られない" } ], },
-    "polite potential": { forms: [ { "before": "る", "after": "られます" } ], },
-    "polite potential negative": { forms: [ { "before": "る", "after": "られません" } ], },
-    "imperative": { forms: [ { "before": "る", "after": "ろ" } ], },
-    "imperative negative": { forms: [ { "before": "る", "after": "るな" } ], },
+    "potential negative": { forms: [ { "before": "る", "after": "られない" } ] },
+    "polite potential": { forms: [ { "before": "る", "after": "られます" } ] },
+    "polite potential negative": { forms: [ { "before": "る", "after": "られません" } ] },
+    "imperative": { forms: [ { "before": "る", "after": "ろ" } ] },
+    "imperative negative": { forms: [ { "before": "る", "after": "るな" } ] },
     "passive": { forms: [ { "before": "る", "after": "られる" } ] },
-    "passive negative": { forms: [ { "before": "る", "after": "られない" } ], },
+    "passive negative": { forms: [ { "before": "る", "after": "られない" } ] },
     "passive past": { forms: [ { "before": "る", "after": "られた" } ] },
-    "passive past negative": { forms: [ { "before": "る", "after": "られなかった" } ], },
-    "passive te-form": { forms: [ { "before": "る", "after": "られて" } ], },
-    "polite passive": { forms: [ { "before": "る", "after": "られます" } ], },
-    "polite passive negative": { forms: [ { "before": "る", "after": "られません" } ], },
-    "polite passive past": { forms: [ { "before": "る", "after": "られました" } ], },
-    "polite passive past negative": { forms: [ { "before": "る", "after": "られませんでした" } ], },
-    "causative": { forms: [ { "before": "る", "after": "させる" } ], },
-    "causative negative": { forms: [ { "before": "る", "after": "させない" } ], },
-    "causative past": { forms: [ { "before": "る", "after": "させた" } ], },
-    "causative past negative": { forms: [ { "before": "る", "after": "させなかった" } ], },
-    "causative passive": { forms: [ { "before": "る", "after": "させられる" } ], },
-    "causative passive negative": { forms: [ { "before": "る", "after": "させられない" } ], },
-    "causative passive past": { forms: [ { "before": "る", "after": "させられた" } ], },
-    "causative passive past negative": { forms: [ { "before": "る", "after": "させられなかった" } ], },
-    "progressive": { forms: [ { "before": "る", "after": "ている" } ], },
-    "progressive negative": { forms: [ { "before": "る", "after": "ていない" } ], },
-    "polite progressive": { forms: [ { "before": "る", "after": "ています" } ], },
-    "polite progressive negative": { forms: [ { "before": "る", "after": "ていません" } ], },
-    "progressive past": { forms: [ { "before": "る", "after": "ていた" } ], },
-    "progressive past negative": { forms: [ { "before": "る", "after": "ていなかった" } ], },
-    "polite progressive past": { forms: [ { "before": "る", "after": "ていました" } ], },
-    "polite progressive past negative": { forms: [ { "before": "る", "after": "ていませんでした" } ], },
-    "desire": { forms: [ { "before": "る", "after": "たい" }, ], },
-    "desire negative": { forms: [ { "before": "る", "after": "たくない" }, ], },
-    "desire past": { forms: [ { "before": "る", "after": "たかった" }, ], },
-    "desire past negative": { forms: [ { "before": "る", "after": "たくなかった" }, ], },
-    "desire te-form": { forms: [ { "before": "る", "after": "たくて" }, ], },
-    "desire te-form negative": { forms: [ { "before": "る", "after": "たくなくて" }, ], },
-    "desire polite": { forms: [ { "before": "る", "after": "たいです" }, ], },
-    "desire polite negative": { forms: [ { "before": "る", "after": "たくないです" }, ], },
-    "desire polite past": { forms: [ { "before": "る", "after": "たかったです" }, ], },
-    "desire polite past negative": { forms: [ { "before": "る", "after": "たくなかったです" }, ], },
-    "volitional": { forms: [ { "before": "る", "after": "よう" }, ], },
-    "polite volitional": { forms: [ { "before": "る", "after": "ましょう" }, ], },
+    "passive past negative": { forms: [ { "before": "る", "after": "られなかった" } ] },
+    "passive te-form": { forms: [ { "before": "る", "after": "られて" } ] },
+    "polite passive": { forms: [ { "before": "る", "after": "られます" } ] },
+    "polite passive negative": { forms: [ { "before": "る", "after": "られません" } ] },
+    "polite passive past": { forms: [ { "before": "る", "after": "られました" } ] },
+    "polite passive past negative": { forms: [ { "before": "る", "after": "られませんでした" } ] },
+    "causative": { forms: [ { "before": "る", "after": "させる" } ] },
+    "causative negative": { forms: [ { "before": "る", "after": "させない" } ] },
+    "causative past": { forms: [ { "before": "る", "after": "させた" } ] },
+    "causative past negative": { forms: [ { "before": "る", "after": "させなかった" } ] },
+    "causative passive": { forms: [ { "before": "る", "after": "させられる" } ] },
+    "causative passive negative": { forms: [ { "before": "る", "after": "させられない" } ] },
+    "causative passive past": { forms: [ { "before": "る", "after": "させられた" } ] },
+    "causative passive past negative": { forms: [ { "before": "る", "after": "させられなかった" } ] },
+    "progressive": { forms: [ { "before": "る", "after": "ている" } ] },
+    "progressive negative": { forms: [ { "before": "る", "after": "ていない" } ] },
+    "polite progressive": { forms: [ { "before": "る", "after": "ています" } ] },
+    "polite progressive negative": { forms: [ { "before": "る", "after": "ていません" } ] },
+    "progressive past": { forms: [ { "before": "る", "after": "ていた" } ] },
+    "progressive past negative": { forms: [ { "before": "る", "after": "ていなかった" } ] },
+    "polite progressive past": { forms: [ { "before": "る", "after": "ていました" } ] },
+    "polite progressive past negative": { forms: [ { "before": "る", "after": "ていませんでした" } ] },
+    "desire": { forms: [ { "before": "る", "after": "たい" } ] },
+    "desire negative": { forms: [ { "before": "る", "after": "たくない" } ] },
+    "desire past": { forms: [ { "before": "る", "after": "たかった" } ] },
+    "desire past negative": { forms: [ { "before": "る", "after": "たくなかった" } ] },
+    "desire te-form": { forms: [ { "before": "る", "after": "たくて" } ] },
+    "desire te-form negative": { forms: [ { "before": "る", "after": "たくなくて" } ] },
+    "desire polite": { forms: [ { "before": "る", "after": "たいです" } ] },
+    "desire polite negative": { forms: [ { "before": "る", "after": "たくないです" } ] },
+    "desire polite past": { forms: [ { "before": "る", "after": "たかったです" } ] },
+    "desire polite past negative": { forms: [ { "before": "る", "after": "たくなかったです" } ] },
+    "volitional": { forms: [ { "before": "る", "after": "よう" } ] },
+    "polite volitional": { forms: [ { "before": "る", "after": "ましょう" } ] },
   },
 
   "iku": {
-    "negative": { forms: [ { "result": "行[い]かない" }, ], },
-    "polite": { forms: [ { "result": "行[い]きます" }, ], },
-    "polite negative": { forms: [ { "result": "行[い]きません" }, ], },
-    "past": { forms: [ { "result": "行[い]った" }, ], },
-    "past negative": { forms: [ { "result": "行[い]かなかった" }, ], },
-    "polite past": { forms: [ { "result": "行[い]きました" }, ], },
-    "polite past negative": { forms: [ { "result": "行[い]きませんでした" }, ], },
-    "te-form": { forms: [ { "result": "行[い]って" }, ], },
-    "te-form negative": { forms: [ { "result": "行[い]かなくて" }, { "result": "行[い]かないで" } ], },
-    "potential": { forms: [ { "result": "行[い]ける" } ], },
-    "potential negative": { forms: [ { "result": "行[い]けない" } ], },
-    "polite potential": { forms: [ { "result": "行[い]けます" } ], },
-    "polite potential negative": { forms: [ { "result": "行[い]けません" } ], },
-    "imperative": { forms: [ { "result": "行[い]け" } ], },
-    "imperative negative": { forms: [ { "result": "行[い]くな" } ], },
-    "passive": { forms: [ { "result": "行[い]かれる" } ], },
-    "passive negative": { forms: [ { "result": "行[い]かれない" } ], },
-    "passive past": { forms: [ { "result": "行[い]かれた" } ], },
-    "passive past negative": { forms: [ { "result": "行[い]かれなかった" } ], },
-    "passive te-form": { forms: [ { "result": "行[い]かれて" } ], },
-    "polite passive": { forms: [ { "result": "行[い]かれます" } ], },
-    "polite passive negative": { forms: [ { "result": "行[い]かれません" } ], },
-    "polite passive past": { forms: [ { "result": "行[い]かれました" } ], },
-    "polite passive past negative": { forms: [ { "result": "行[い]かれませんでした" } ], },
-    "causative": { forms: [ { "result": "行[い]かせる" } ], },
-    "causative negative": { forms: [ { "result": "行[い]かせない" } ], },
-    "causative past": { forms: [ { "result": "行[い]かせた" } ], },
-    "causative past negative": { forms: [ { "result": "行[い]かせなかった" } ], },
-    "causative passive": { forms: [ { "result": "行[い]かせられる" } ], },
-    "causative passive negative": { forms: [ { "result": "行[い]かせられない" } ], },
-    "causative passive past": { forms: [ { "result": "行[い]かせられた" } ], },
-    "causative passive past negative": { forms: [ { "result": "行[い]かせられなかった" } ], },
-    "progressive": { forms: [ { "result": "行[い]っている" } ], },
-    "progressive negative": { forms: [ { "result": "行[い]っていない" } ], },
-    "polite progressive": { forms: [ { "result": "行[い]っています" } ], },
-    "polite progressive negative": { forms: [ { "result": "行[い]っていません" } ], },
-    "progressive past": { forms: [ { "result": "行[い]っていた" } ], },
-    "progressive past negative": { forms: [ { "result": "行[い]っていなかった" } ], },
-    "polite progressive past": { forms: [ { "result": "行[い]っていました" } ], },
-    "polite progressive past negative": { forms: [ { "result": "行[い]っていませんでした" } ], },
-    "desire": { forms: [ { "result": "行[い]きたい" }, ], },
-    "desire negative": { forms: [ { "result": "行[い]きたくない" }, ], },
-    "desire past": { forms: [ { "result": "行[い]きたかった" }, ], },
-    "desire past negative": { forms: [ { "result": "行[い]きたくなかった" }, ], },
-    "desire te-form": { forms: [ { "result": "行[い]きたくて" }, ], },
-    "desire te-form negative": { forms: [ { "result": "行[い]きたくなくて" }, ], },
-    "desire polite": { forms: [ { "result": "行[い]きたいです" }, ], },
-    "desire polite negative": { forms: [ { "result": "行[い]きたくないです" }, ], },
-    "desire polite past": { forms: [ { "result": "行[い]きたかったです" }, ], },
-    "desire polite past negative": { forms: [ { "result": "行[い]きたくなかったです" }, ], },
-    "volitional": { forms: [ { "result": "行[い]こう" }, ], },
-    "polite volitional": { forms: [ { "result": "行[い]きましょう" }, ], },
+    "negative": { forms: [ { "before": "く", "after": "かない" } ] },
+    "polite": { forms: [ { "before": "く", "after": "きます" } ] },
+    "polite negative": { forms: [ { "before": "く", "after": "きません" } ] },
+    "past": { forms: [ { "before": "く", "after": "った" } ] },
+    "past negative": { forms: [ { "before": "く", "after": "かなかった" } ] },
+    "polite past": { forms: [ { "before": "く", "after": "きました" } ] },
+    "polite past negative": { forms: [ { "before": "く", "after": "きませんでした" } ] },
+    "te-form": { forms: [ { "before": "く", "after": "って" } ] },
+    "te-form negative": { forms: [ { "before": "く", "after": "かなくて" }, { "before": "く", "after": "かないで" } ] },
+    "potential": { forms: [ { "before": "く", "after": "ける" } ] },
+    "potential negative": { forms: [ { "before": "く", "after": "けない" } ] },
+    "polite potential": { forms: [ { "before": "く", "after": "けます" } ] },
+    "polite potential negative": { forms: [ { "before": "く", "after": "けません" } ] },
+    "imperative": { forms: [ { "before": "く", "after": "け" } ] },
+    "imperative negative": { forms: [ { "before": "く", "after": "くな" } ] },
+    "passive": { forms: [ { "before": "く", "after": "かれる" } ] },
+    "passive negative": { forms: [ { "before": "く", "after": "かれない" } ] },
+    "passive past": { forms: [ { "before": "く", "after": "かれた" } ] },
+    "passive past negative": { forms: [ { "before": "く", "after": "かれなかった" } ] },
+    "passive te-form": { forms: [ { "before": "く", "after": "かれて" } ] },
+    "polite passive": { forms: [ { "before": "く", "after": "かれます" } ] },
+    "polite passive negative": { forms: [ { "before": "く", "after": "かれません" } ] },
+    "polite passive past": { forms: [ { "before": "く", "after": "かれました" } ] },
+    "polite passive past negative": { forms: [ { "before": "く", "after": "かれませんでした" } ] },
+    "causative": { forms: [ { "before": "く", "after": "かせる" } ] },
+    "causative negative": { forms: [ { "before": "く", "after": "かせない" } ] },
+    "causative past": { forms: [ { "before": "く", "after": "かせた" } ] },
+    "causative past negative": { forms: [ { "before": "く", "after": "かせなかった" } ] },
+    "causative passive": { forms: [ { "before": "く", "after": "かせられる" } ] },
+    "causative passive negative": { forms: [ { "before": "く", "after": "かせられない" } ] },
+    "causative passive past": { forms: [ { "before": "く", "after": "かせられた" } ] },
+    "causative passive past negative": { forms: [ { "before": "く", "after": "かせられなかった" } ] },
+    "progressive": { forms: [ { "before": "く", "after": "いている" } ] },
+    "progressive negative": { forms: [ { "before": "く", "after": "いていない" } ] },
+    "polite progressive": { forms: [ { "before": "く", "after": "いています" } ] },
+    "polite progressive negative": { forms: [ { "before": "く", "after": "いていません" } ] },
+    "progressive past": { forms: [ { "before": "く", "after": "いていた" } ] },
+    "progressive past negative": { forms: [ { "before": "く", "after": "いていなかった" } ] },
+    "polite progressive past": { forms: [ { "before": "く", "after": "いていました" } ] },
+    "polite progressive past negative": { forms: [ { "before": "く", "after": "いていませんでした" } ] },
+    "desire": { forms: [ { "before": "く", "after": "きたい" } ] },
+    "desire negative": { forms: [ { "before": "く", "after": "きたくない" } ] },
+    "desire past": { forms: [ { "before": "く", "after": "きたかった" } ] },
+    "desire past negative": { forms: [ { "before": "く", "after": "きたくなかった" } ] },
+    "desire te-form": { forms: [ { "before": "く", "after": "きたくて" } ] },
+    "desire te-form negative": { forms: [ { "before": "く", "after": "きたくなくて" } ] },
+    "desire polite": { forms: [ { "before": "く", "after": "きたいです" } ] },
+    "desire polite negative": { forms: [ { "before": "く", "after": "きたくないです" } ] },
+    "desire polite past": { forms: [ { "before": "く", "after": "きたかったです" } ] },
+    "desire polite past negative": { forms: [ { "before": "く", "after": "きたくなかったです" } ] },
+    "volitional": { forms: [ { "before": "く", "after": "こう" } ] },
+    "polite volitional": { forms: [ { "before": "く", "after": "きましょう" } ] },
   },
 
   "kuru": {
-    "negative": { forms: [ { "result": "来[こ]ない" } ], },
-    "polite": { forms: [ { "result": "来[き]ます" } ], },
-    "polite negative": { forms: [ { "result": "来[き]ません" } ], },
-    "past": { forms: [ { "result": "来[き]た" } ], },
-    "past negative": { forms: [ { "result": "来[こ]なかった" } ], },
-    "polite past": { forms: [ { "result": "来[き]ました" } ], },
-    "polite past negative": { forms: [ { "result": "来[き]ませんでした" } ], },
-    "te-form": { forms: [ { "result": "来[き]て" } ], },
-    "te-form negative": { forms: [ { "result": "来[こ]なくて" }, { "result": "来[こ]ないで" } ], },
-    "potential": { forms: [ { "result": "来[こ]られる" } ], },
-    "potential negative": { forms: [ { "result": "来[こ]られない" } ], },
-    "polite potential": { forms: [ { "result": "来[こ]られます" } ], },
-    "polite potential negative": { forms: [ { "result": "来[こ]られません" } ], },
-    "imperative": { forms: [ { "result": "来[こ]い" } ], },
-    "imperative negative": { forms: [ { "result": "来[く]るな" } ], },
-    "passive": { forms: [ { "result": "来[こ]られる" } ], },
-    "passive negative": { forms: [ { "result": "来[こ]られない" } ], },
-    "passive past": { forms: [ { "result": "来[こ]られた" } ], },
-    "passive past negative": { forms: [ { "result": "来[こ]られなかった" } ], },
-    "passive te-form": { forms: [ { "result": "来[こ]られて" } ], },
-    "polite passive": { forms: [ { "result": "来[こ]られます" } ], },
-    "polite passive negative": { forms: [ { "result": "来[こ]られません" } ], },
-    "polite passive past": { forms: [ { "result": "来[こ]られました" } ], },
-    "polite passive past negative": { forms: [ { "result": "来[こ]られませんでした" } ], },
-    "causative": { forms: [ { "result": "来[こ]させる" } ], },
-    "causative negative": { forms: [ { "result": "来[こ]させない" } ], },
-    "causative past": { forms: [ { "result": "来[こ]させた" } ], },
-    "causative past negative": { forms: [ { "result": "来[こ]させなかった" } ], },
-    "causative passive": { forms: [ { "result": "来[こ]させられる" } ], },
-    "causative passive negative": { forms: [ { "result": "来[こ]させられない" } ], },
-    "causative passive past": { forms: [ { "result": "来[こ]させられた" } ], },
-    "causative passive past negative": { forms: [ { "result": "来[こ]させられなかった" } ], },
-    "progressive": { forms: [ { "result": "来[き]ている" } ], },
-    "progressive negative": { forms: [ { "result": "来[き]ていない" } ], },
-    "polite progressive": { forms: [ { "result": "来[き]ています" } ], },
-    "polite progressive negative": { forms: [ { "result": "来[き]ていません" } ], },
-    "progressive past": { forms: [ { "result": "来[き]ていた" } ], },
-    "progressive past negative": { forms: [ { "result": "来[き]ていなかった" } ], },
-    "polite progressive past": { forms: [ { "result": "来[き]ていました" } ], },
-    "polite progressive past negative": { forms: [ { "result": "来[き]ていませんでした" } ], },
-    "desire": { forms: [ { "result": "来[き]たい" }, ], },
-    "desire negative": { forms: [ { "result": "来[き]たくない" }, ], },
-    "desire polite": { forms: [ { "result": "来[き]たいです" }, ], },
-    "desire polite negative": { forms: [ { "result": "来[き]たくないです" }, ], },
-    "volitional": { forms: [ { "result": "来[こ]よう" }, ], },
-    "polite volitional": { forms: [ { "result": "来[き]ましょう" }, ], },
+    "negative": { forms: [ { "before": "来る", "after": "来ない" }, { "before": "くる", "after": "こない" } ] },
+    "polite": { forms: [ { "before": "来る", "after": "来ます" }, { "before": "くる", "after": "きます" } ] },
+    "polite negative": { forms: [ { "before": "来る", "after": "来ません" }, { "before": "くる", "after": "きません" } ] },
+    "past": { forms: [ { "before": "来る", "after": "来た" }, { "before": "くる", "after": "きた" } ] },
+    "past negative": { forms: [ { "before": "来る", "after": "来なかった" }, { "before": "くる", "after": "こなかった" } ] },
+    "polite past": { forms: [ { "before": "来る", "after": "来ました" }, { "before": "くる", "after": "きました" } ] },
+    "polite past negative": { forms: [ { "before": "来る", "after": "来ませんでした" }, { "before": "くる", "after": "きませんでした" } ] },
+    "te-form": { forms: [ { "before": "来る", "after": "来て" }, { "before": "くる", "after": "きて" } ] },
+    "te-form negative": { forms: [ { "before": "来る", "after": "来なくて" }, { "before": "くる", "after": "こなくて" }, { "before": "来る", "after": "来ないで" }, { "before": "くる", "after": "こないで" } ] },
+    "potential": { forms: [ { "before": "来る", "after": "来られる" }, { "before": "くる", "after": "こられる" } ] },
+    "potential negative": { forms: [ { "before": "来る", "after": "来られない" }, { "before": "くる", "after": "こられない" } ] },
+    "polite potential": { forms: [ { "before": "来る", "after": "来られます" }, { "before": "くる", "after": "こられます" } ] },
+    "polite potential negative": { forms: [ { "before": "来る", "after": "来られません" }, { "before": "くる", "after": "こられません" } ] },
+    "imperative": { forms: [ { "before": "来る", "after": "来い" }, { "before": "くる", "after": "こい" } ] },
+    "imperative negative": { forms: [ { "before": "来る", "after": "来るな" }, { "before": "くる", "after": "くるな" } ] },
+    "passive": { forms: [ { "before": "来る", "after": "来られる" }, { "before": "くる", "after": "こられる" } ] },
+    "passive negative": { forms: [ { "before": "来る", "after": "来られない" }, { "before": "くる", "after": "こられない" } ] },
+    "passive past": { forms: [ { "before": "来る", "after": "来られた" }, { "before": "くる", "after": "こられた" } ] },
+    "passive past negative": { forms: [ { "before": "来る", "after": "来られなかった" }, { "before": "くる", "after": "こられなかった" } ] },
+    "passive te-form": { forms: [ { "before": "来る", "after": "来られて" }, { "before": "くる", "after": "こられて" } ] },
+    "polite passive": { forms: [ { "before": "来る", "after": "来られます" }, { "before": "くる", "after": "こられます" } ] },
+    "polite passive negative": { forms: [ { "before": "来る", "after": "来られません" }, { "before": "くる", "after": "こられません" } ] },
+    "polite passive past": { forms: [ { "before": "来る", "after": "来られました" }, { "before": "くる", "after": "こられました" } ] },
+    "polite passive past negative": { forms: [ { "before": "来る", "after": "来られませんでした" }, { "before": "くる", "after": "こられませんでした" } ] },
+    "causative": { forms: [ { "before": "来る", "after": "来させる" }, { "before": "くる", "after": "こさせる" } ] },
+    "causative negative": { forms: [ { "before": "来る", "after": "来させない" }, { "before": "くる", "after": "こさせない" } ] },
+    "causative past": { forms: [ { "before": "来る", "after": "来させた" }, { "before": "くる", "after": "こさせた" } ] },
+    "causative past negative": { forms: [ { "before": "来る", "after": "来させなかった" }, { "before": "くる", "after": "こさせなかった" } ] },
+    "causative passive": { forms: [ { "before": "来る", "after": "来させられる" }, { "before": "くる", "after": "こさせられる" } ] },
+    "causative passive negative": { forms: [ { "before": "来る", "after": "来させられない" }, { "before": "くる", "after": "こさせられない" } ] },
+    "causative passive past": { forms: [ { "before": "来る", "after": "来させられた" }, { "before": "くる", "after": "こさせられた" } ] },
+    "causative passive past negative": { forms: [ { "before": "来る", "after": "来させられなかった" }, { "before": "くる", "after": "こさせられなかった" } ] },
+    "progressive": { forms: [ { "before": "来る", "after": "来ている" }, { "before": "くる", "after": "きている" } ] },
+    "progressive negative": { forms: [ { "before": "来る", "after": "来ている" }, { "before": "くる", "after": "きていない" } ] },
+    "polite progressive": { forms: [ { "before": "来る", "after": "来ています" }, { "before": "くる", "after": "きています" } ] },
+    "polite progressive negative": { forms: [ { "before": "来る", "after": "来ていません" }, { "before": "くる", "after": "きていません" } ] },
+    "progressive past": { forms: [ { "before": "来る", "after": "来ていた" }, { "before": "くる", "after": "きていた" } ] },
+    "progressive past negative": { forms: [ { "before": "来る", "after": "来ていなかった" }, { "before": "くる", "after": "きていなかった" } ] },
+    "polite progressive past": { forms: [ { "before": "来る", "after": "来ていました" }, { "before": "くる", "after": "きていました" } ] },
+    "polite progressive past negative": { forms: [ { "before": "来る", "after": "来ていませんでした" }, { "before": "くる", "after": "きていませんでした" } ] },
+    "desire": { forms: [ { "before": "来る", "after": "来たい" }, { "before": "くる", "after": "きたい" } ] },
+    "desire negative": { forms: [ { "before": "来る", "after": "来たくない" }, { "before": "くる", "after": "きたくない" } ] },
+    "desire polite": { forms: [ { "before": "来る", "after": "来たいです" }, { "before": "くる", "after": "きたいです" } ] },
+    "desire polite negative": { forms: [ { "before": "来る", "after": "来たくないです" }, { "before": "くる", "after": "きたくないです" } ] },
+    "volitional": { forms: [ { "before": "来る", "after": "来よう" }, { "before": "くる", "after": "こよう" } ] },
+    "polite volitional": { forms: [ { "before": "来る", "after": "来ましょう" }, { "before": "くる", "after": "きましょう" } ] },
   },
 
   "suru": {
-    "negative": { forms: [ { "before": "する", "after": "しない" }, ], },
-    "polite": { forms: [ { "before": "する", "after": "します" }, ], },
-    "polite negative": { forms: [ { "before": "する", "after": "しません" }, ], },
-    "past": { forms: [ { "before": "する", "after": "した" }, ], },
-    "past negative": { forms: [ { "before": "する", "after": "しなかった" }, ], },
-    "polite past": { forms: [ { "before": "する", "after": "しました" }, ], },
-    "polite past negative": { forms: [ { "before": "する", "after": "しませんでした" }, ], },
-    "te-form": { forms: [ { "before": "する", "after": "して" }, ], },
-    "te-form negative": { forms: [ { "before": "する", "after": "しなくて" }, { "before": "する", "after": "しないで" } ], },
-    "potential": { forms: [ { "before": "する", "after": "できる" } ], },
-    "potential negative": { forms: [ { "before": "する", "after": "できない" } ], },
-    "polite potential": { forms: [ { "before": "する", "after": "できます" } ], },
-    "polite potential negative": { forms: [ { "before": "する", "after": "できません" } ], },
-    "imperative": { forms: [ { "before": "する", "after": "しろ" } ], },
-    "imperative negative": { forms: [ { "before": "する", "after": "するな" } ], },
-    "passive": { forms: [ { "before": "する", "after": "される" } ], },
-    "passive negative": { forms: [ { "before": "する", "after": "されない" } ], },
-    "passive past": { forms: [ { "before": "する", "after": "された" } ], },
-    "passive past negative": { forms: [ { "before": "する", "after": "されなかった" } ], },
-    "passive te-form": { forms: [ { "before": "する", "after": "されて" } ], },
-    "polite passive": { forms: [ { "before": "する", "after": "されます" } ], },
-    "polite passive negative": { forms: [ { "before": "する", "after": "されません" } ], },
-    "polite passive past": { forms: [ { "before": "する", "after": "されました" } ], },
-    "polite passive past negative": { forms: [ { "before": "する", "after": "されませんでした" } ], },
-    "causative": { forms: [ { "before": "する", "after": "させる" } ], },
-    "causative negative": { forms: [ { "before": "する", "after": "させない" } ], },
-    "causative past": { forms: [ { "before": "する", "after": "させた" } ], },
-    "causative past negative": { forms: [ { "before": "する", "after": "させなかった" } ], },
-    "causative passive": { forms: [ { "before": "する", "after": "させられる" } ], },
-    "causative passive negative": { forms: [ { "before": "する", "after": "させられない" } ], },
-    "causative passive past": { forms: [ { "before": "する", "after": "させられた" } ], },
-    "causative passive past negative": { forms: [ { "before": "する", "after": "させられなかった" } ], },
-    "progressive": { forms: [ { "before": "する", "after": "している" } ], },
-    "progressive negative": { forms: [ { "before": "する", "after": "していない" } ], },
-    "polite progressive": { forms: [ { "before": "する", "after": "しています" } ], },
-    "polite progressive negative": { forms: [ { "before": "する", "after": "していません" } ], },
-    "progressive past": { forms: [ { "before": "する", "after": "していた" } ], },
-    "progressive past negative": { forms: [ { "before": "する", "after": "していなかった" } ], },
-    "polite progressive past": { forms: [ { "before": "する", "after": "していました" } ], },
-    "polite progressive past negative": { forms: [ { "before": "する", "after": "していませんでした" } ], },
-    "desire": { forms: [ { "before": "する", "after": "したい" }, ], },
-    "desire negative": { forms: [ { "before": "する", "after": "したくない" }, ], },
-    "desire past": { forms: [ { "before": "する", "after": "したかった" }, ], },
-    "desire past negative": { forms: [ { "before": "する", "after": "したくなかった" }, ], },
-    "desire te-form": { forms: [ { "before": "する", "after": "したくて" }, ], },
-    "desire te-form negative": { forms: [ { "before": "する", "after": "したくなくて" }, ], },
-    "desire polite": { forms: [ { "before": "する", "after": "したいです" }, ], },
-    "desire polite negative": { forms: [ { "before": "する", "after": "したくないです" }, ], },
-    "desire polite past": { forms: [ { "before": "する", "after": "したかったです" }, ], },
-    "desire polite past negative": { forms: [ { "before": "する", "after": "したくなかったです" }, ], },
-    "volitional": { forms: [ { "before": "する", "after": "しよう" }, ], },
-    "polite volitional": { forms: [ { "before": "する", "after": "しましょう" }, ], },
+    "negative": { forms: [ { "before": "する", "after": "しない" } ] },
+    "polite": { forms: [ { "before": "する", "after": "します" } ] },
+    "polite negative": { forms: [ { "before": "する", "after": "しません" } ] },
+    "past": { forms: [ { "before": "する", "after": "した" } ] },
+    "past negative": { forms: [ { "before": "する", "after": "しなかった" } ] },
+    "polite past": { forms: [ { "before": "する", "after": "しました" } ] },
+    "polite past negative": { forms: [ { "before": "する", "after": "しませんでした" } ] },
+    "te-form": { forms: [ { "before": "する", "after": "して" } ] },
+    "te-form negative": { forms: [ { "before": "する", "after": "しなくて" }, { "before": "する", "after": "しないで" } ] },
+    "potential": { forms: [ { "before": "する", "after": "できる" } ] },
+    "potential negative": { forms: [ { "before": "する", "after": "できない" } ] },
+    "polite potential": { forms: [ { "before": "する", "after": "できます" } ] },
+    "polite potential negative": { forms: [ { "before": "する", "after": "できません" } ] },
+    "imperative": { forms: [ { "before": "する", "after": "しろ" } ] },
+    "imperative negative": { forms: [ { "before": "する", "after": "するな" } ] },
+    "passive": { forms: [ { "before": "する", "after": "される" } ] },
+    "passive negative": { forms: [ { "before": "する", "after": "されない" } ] },
+    "passive past": { forms: [ { "before": "する", "after": "された" } ] },
+    "passive past negative": { forms: [ { "before": "する", "after": "されなかった" } ] },
+    "passive te-form": { forms: [ { "before": "する", "after": "されて" } ] },
+    "polite passive": { forms: [ { "before": "する", "after": "されます" } ] },
+    "polite passive negative": { forms: [ { "before": "する", "after": "されません" } ] },
+    "polite passive past": { forms: [ { "before": "する", "after": "されました" } ] },
+    "polite passive past negative": { forms: [ { "before": "する", "after": "されませんでした" } ] },
+    "causative": { forms: [ { "before": "する", "after": "させる" } ] },
+    "causative negative": { forms: [ { "before": "する", "after": "させない" } ] },
+    "causative past": { forms: [ { "before": "する", "after": "させた" } ] },
+    "causative past negative": { forms: [ { "before": "する", "after": "させなかった" } ] },
+    "causative passive": { forms: [ { "before": "する", "after": "させられる" } ] },
+    "causative passive negative": { forms: [ { "before": "する", "after": "させられない" } ] },
+    "causative passive past": { forms: [ { "before": "する", "after": "させられた" } ] },
+    "causative passive past negative": { forms: [ { "before": "する", "after": "させられなかった" } ] },
+    "progressive": { forms: [ { "before": "する", "after": "している" } ] },
+    "progressive negative": { forms: [ { "before": "する", "after": "していない" } ] },
+    "polite progressive": { forms: [ { "before": "する", "after": "しています" } ] },
+    "polite progressive negative": { forms: [ { "before": "する", "after": "していません" } ] },
+    "progressive past": { forms: [ { "before": "する", "after": "していた" } ] },
+    "progressive past negative": { forms: [ { "before": "する", "after": "していなかった" } ] },
+    "polite progressive past": { forms: [ { "before": "する", "after": "していました" } ] },
+    "polite progressive past negative": { forms: [ { "before": "する", "after": "していませんでした" } ] },
+    "desire": { forms: [ { "before": "する", "after": "したい" } ] },
+    "desire negative": { forms: [ { "before": "する", "after": "したくない" } ] },
+    "desire past": { forms: [ { "before": "する", "after": "したかった" } ] },
+    "desire past negative": { forms: [ { "before": "する", "after": "したくなかった" } ] },
+    "desire te-form": { forms: [ { "before": "する", "after": "したくて" } ] },
+    "desire te-form negative": { forms: [ { "before": "する", "after": "したくなくて" } ] },
+    "desire polite": { forms: [ { "before": "する", "after": "したいです" } ] },
+    "desire polite negative": { forms: [ { "before": "する", "after": "したくないです" } ] },
+    "desire polite past": { forms: [ { "before": "する", "after": "したかったです" } ] },
+    "desire polite past negative": { forms: [ { "before": "する", "after": "したくなかったです" } ] },
+    "volitional": { forms: [ { "before": "する", "after": "しよう" } ] },
+    "polite volitional": { forms: [ { "before": "する", "after": "しましょう" } ] },
   },
 
   "i-adjective": {
-
-    "negative": { forms: [ { "before": "い", "after": "くない" } ], },
-    "polite": { forms: [ { "before": "い", "after": "いです" } ], },
-    "polite negative": { forms: [ { "before": "い", "after": "くないです" }, { "before": "い", "after": "くありません" } ], },
-    "past": { forms: [ { "before": "い", "after": "かった" } ], },
-    "past negative": { forms: [ { "before": "い", "after": "くなかった" } ], },
-    "polite past": { forms: [ { "before": "い", "after": "かったです" } ], },
-    "polite past negative": { forms: [ { "before": "い", "after": "くなかったです" }, { "before": "い", "after": "くありませんでした" } ], },
+    "negative": { forms: [ { "before": "い", "after": "くない" } ] },
+    "polite": { forms: [ { "before": "い", "after": "いです" } ] },
+    "polite negative": { forms: [ { "before": "い", "after": "くないです" }, { "before": "い", "after": "くありません" } ] },
+    "past": { forms: [ { "before": "い", "after": "かった" } ] },
+    "past negative": { forms: [ { "before": "い", "after": "くなかった" } ] },
+    "polite past": { forms: [ { "before": "い", "after": "かったです" } ] },
+    "polite past negative": { forms: [ { "before": "い", "after": "くなかったです" }, { "before": "い", "after": "くありませんでした" } ] },
+    "te-form": { forms: [ { "before": "い", "after": "くて" } ] },
+    "te-form negative": { forms: [ { "before": "い", "after": "くなくて" } ] },
   },
 
   "ii": {
-    "negative": { forms: [ { "result": "良[よ]くない" } ], },
-    "polite": { forms: [ { "result": "いいです" } ], },
-    "polite negative": { forms: [ { "result": "良[よ]くないです" }, { "result": "良[よ]くありません" } ], },
-    "past": { forms: [ { "result": "良[よ]かった" } ], },
-    "past negative": { forms: [ { "result": "良[よ]くなかった" } ], },
-    "polite past": { forms: [ { "result": "良[よ]かったです" } ], },
-    "polite past negative": { forms: [ { "result": "良[よ]くなかったです" }, { "result": "良[よ]くありませんでした" } ], },
+    "negative": { forms: [ { "before": "いい", "after": "よくない" }, { "before": "よい", "after": "よくない" } ] },
+    "polite": { forms: [ { "before": "いい", "after": "いいです" }, { "before": "よい", "after": "よいです" } ] },
+    "polite negative": { forms: [ { "before": "いい", "after": "よくないです" }, { "before": "よい", "after": "よくないです" }, { "before": "いい", "after": "よくありません" }, { "before": "よい", "after": "よくありません" } ] },
+    "past": { forms: [ { "before": "いい", "after": "よかった" }, { "before": "よい", "after": "よかった" } ] },
+    "past negative": { forms: [ { "before": "いい", "after": "よくなかった" }, { "before": "よい", "after": "よくなかった" } ] },
+    "polite past": { forms: [ { "before": "いい", "after": "よかったです" }, { "before": "よい", "after": "よかったです" } ] },
+    "polite past negative": { forms: [ { "before": "いい", "after": "よくなかったです" }, { "before": "よい", "after": "よくなかったです" }, { "before": "いい", "after": "よくありませんでした" }, { "before": "よい", "after": "よくありませんでした" } ] },
+    "te-form": { forms: [ { "before": "いい", "after": "よくて" }, { "before": "よい", "after": "よくて" } ] },
+    "te-form negative": { forms: [ { "before": "いい", "after": "よくなくて" }, { "before": "よい", "after": "よくなくて" } ] },
   },
 
   "na-adjective": {
-    "negative": { forms: [ { "before": "だ", "after": "じゃない" }, { "before": "だ", "after": "じゃない" } ], },
-    "polite": { forms: [ { "before": "だ", "after": "です" } ], },
-    "polite negative": { forms: [ { "before": "だ", "after": "じゃないです" }, { "before": "だ", "after": "じゃないです" }, { "before": "だ", "after": "じゃありません" }, { "before": "だ", "after": "じゃありません" } ], },
-    "past": { forms: [ { "before": "だ", "after": "だった" } ], },
-    "past negative": { forms: [ { "before": "だ", "after": "じゃなかった" }, { "before": "だ", "after": "じゃなかった" } ], },
-    "polite past": { forms: [ { "before": "だ", "after": "でした" } ], },
-    "polite past negative": { forms: [ { "before": "だ", "after": "じゃなかったです" }, { "before": "だ", "after": "じゃなかったです" }, { "before": "だ", "after": "じゃありませんでした" }, { "before": "だ", "after": "じゃありませんでした" } ], },
+    "negative": { forms: [ { "before": "だ", "after": "じゃない" }, { "before": "だ", "after": "ではない" } ] },
+    "polite": { forms: [ { "before": "だ", "after": "です" } ] },
+    "polite negative": { forms: [ { "before": "だ", "after": "じゃないです" }, { "before": "だ", "after": "じゃありません" }, { "before": "だ", "after": "ではありません" } ] },
+    "past": { forms: [ { "before": "だ", "after": "だった" } ] },
+    "past negative": { forms: [ { "before": "だ", "after": "じゃなかった" }, { "before": "だ", "after": "でなかった" } ] },
+    "polite past": { forms: [ { "before": "だ", "after": "でした" } ] },
+    "polite past negative": { forms: [ { "before": "だ", "after": "じゃなかったです" }, { "before": "だ", "after": "じゃありませんでした" }, { "before": "だ", "after": "ではありませんでした" } ] },
+    "te-form": { forms: [ { "before": "だ", "after": "で" } ] },
+    "te-form negative": { forms: [ { "before": "だ", "after": "じゃなくて" }, { "before": "だ", "after": "でなくて" } ] },
   },
 };
