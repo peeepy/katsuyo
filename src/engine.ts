@@ -28,7 +28,7 @@ function getRuleGroup(word: Word): string {
 
 function isWordTypeActive(word: Word, settings: DrillSettings): boolean {
   const wt = settings.wordTypes as Record<string, boolean | undefined>;
-  const pos = word.pos.toLowerCase();
+  word.pos.toLowerCase();
   const group = getRuleGroup(word);
 
   // Direct toggle check
