@@ -3,6 +3,8 @@ import * as wanakana from 'wanakana';
 import { type ConjugationResult, type DrillSettings } from '../types';
 import { type QuizState, type QuizAction } from '../quizState';
 import { ThemeQuickSwitcher } from './ThemeQuickSwitcher';
+import { WordTypeHint } from './WordTypeHints';
+import { getWordGroupLabel } from '../utils/wordGroups';
 
 interface FlashcardQuizProps {
   state: QuizState;
@@ -23,13 +25,25 @@ export function FlashcardQuiz({ state, settings, isCorrect, dispatch, renderRuby
   const inputRef = useRef<HTMLInputElement>(null);
   const nextBtnRef = useRef<HTMLButtonElement>(null);
 
-  // The input becomes `disabled` once graded, which means it can no longer
-  // hold focus or receive keydown events — so Enter has to be caught by
-  // focusing the Next button instead, same pattern as the non-flashcard view.
   useEffect(() => {
     if (state.status === 'answering') inputRef.current?.focus();
     if (state.status === 'graded') nextBtnRef.current?.focus();
   }, [state.status, state.currentIndex]);
+
+      // Handled on window rather than relying on the input/Next button holding
+  // focus: those lose focus the moment the user taps elsewhere (e.g. the
+  // theme switcher or settings gear), which used to make Enter silently
+  // stop advancing even though the on-screen hint still says it should work.
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Enter') return;
+      e.preventDefault();
+      if (state.status === 'answering') dispatch({ type: 'SUBMIT_ANSWER' });
+      else if (state.status === 'graded') onNext();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [state.status, dispatch, onNext]);
 
   if (!currentQ) return null;
 
@@ -77,7 +91,10 @@ export function FlashcardQuiz({ state, settings, isCorrect, dispatch, renderRuby
           </div>
         )}
 
-        <div className="flashcard-stimulus">{renderRuby(currentQ.source)}</div>
+        <div className="stimulus-row">
+          <div className="flashcard-stimulus">{renderRuby(currentQ.source)}</div>
+          <WordTypeHint label={getWordGroupLabel(currentQ.group)} />
+              </div>
         <div className="flashcard-instruction">→ {currentQ.instruction}</div>
 
         {state.status === 'graded' && (
@@ -113,12 +130,6 @@ export function FlashcardQuiz({ state, settings, isCorrect, dispatch, renderRuby
             type: 'TYPE_ANSWER',
             payload: wanakana.toKana(e.target.value, { IMEMode: 'toHiragana' }),
           })}
-          onKeyDown={e => {
-            if (e.key !== 'Enter') return;
-            e.preventDefault();
-            if (state.status === 'answering') dispatch({ type: 'SUBMIT_ANSWER' });
-            else onNext();
-          }}
           placeholder="type romaji..."
           className="answer-input"
         />

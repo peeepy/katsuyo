@@ -906,6 +906,12 @@ input[type="checkbox"] {
   display: flex;
   flex-direction: column;
   background: var(--paper);
+  /* `color` is inherited from body using body's computed value, not
+       re-resolved against --ink here — without redeclaring it, descendants
+       that don't set their own color (e.g. .flashcard-stimulus) would keep
+       inheriting the light theme's dark ink even after the dark scope above
+       reassigns --ink, making the text unreadable against the dark card. */
+    color: var(--ink);
 }
 
 .flashcard-topbar {
@@ -1032,3 +1038,29 @@ input[type="checkbox"] {
   gap: 10px;
   padding: 14px calc(14px + env(safe-area-inset-right)) calc(14px + env(safe-area-inset-bottom)) calc(14px + env(safe-area-inset-left));
 }
+
+/* .answer-input and .explanation-box hardcode a cream/white surface rather
+   than reading from the theme tokens, so the dark flashcard-screen scope
+   above needs to override them explicitly here. */
+[data-theme="c"] .flashcard-screen .answer-input {
+  background: var(--card-2);
+}
+
+[data-theme="c"] .flashcard-screen .explanation-box {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="b"] .input-number,
+[data-theme="b"] .answer-input {
+  background: var(--card-2);
+}
+
+[data-theme="b"] .select {
+  background-color: var(--card-2);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="%23aab0ba" d="M7 10l5 5 5-5z"/></svg>');
+}
+
+[data-theme="b"] .explanation-box {
+  background: rgba(255, 255, 255, 0.06);
+}
+

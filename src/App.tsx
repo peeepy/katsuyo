@@ -11,6 +11,8 @@ import { ThemeSelector } from './components/ThemeSelector';
 import { ThemeQuickSwitcher } from './components/ThemeQuickSwitcher.tsx';
 import { SettingsShell } from './components/SettingsShell';
 import { FlashcardQuiz } from './components/FlashcardQuiz';
+import { WordTypeHint } from './components/WordTypeHints';
+
 
 const VERB_TYPE_KEYS: WordGroup[] = GROUP_META.filter(g => g.category === 'verb').map(g => g.key);
 const ADJ_TYPE_KEYS: WordGroup[] = GROUP_META.filter(g => g.category === 'adj').map(g => g.key);
@@ -41,35 +43,6 @@ const initialState: QuizState = {
   correctCount: 0,
   missed: []
 };
-
-function WordTypeHint({ label }: { label: string }) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!open) return;
-    const handleOutside = (e: MouseEvent | TouchEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleOutside);
-    document.addEventListener('touchstart', handleOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleOutside);
-      document.removeEventListener('touchstart', handleOutside);
-    };
-  }, [open]);
-
-  return (
-    <div className="hint-wrap" ref={ref}>
-      <button type="button" className="hint-btn" onClick={() => setOpen(o => !o)} aria-label="Word type hint">
-        ?
-      </button>
-      {open && <div className="hint-tooltip">{label}</div>}
-    </div>
-  );
-}
 
 export default function App() {
   return (
@@ -120,14 +93,21 @@ function AppInner() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (state.status === 'summary' && e.key === 'Enter' && !showSettingsModal) {
-        e.preventDefault();
+      if (e.key !== 'Enter' || showSettingsModal) return;
+      if (state.status === 'summary') {
+      e.preventDefault();
         dispatch({ type: 'GO_HOME' });
+      } else if (state.status === 'answering') {
+        e.preventDefault();
+        dispatch({ type: 'SUBMIT_ANSWER' });
+      } else if (state.status === 'graded') {
+        e.preventDefault();
+        advance();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [state.status, showSettingsModal]);
+ }, [state.status, showSettingsModal, advance]);
 
   const handleSettingsSave = (newSettings: DrillSettings) => {
     let remainingQuestions;
@@ -247,12 +227,6 @@ function AppInner() {
                       type: 'TYPE_ANSWER',
                       payload: wanakana.toKana(e.target.value, { IMEMode: 'toHiragana' })
                     })}
-                    onKeyDown={e => {
-                      if (e.key === 'Enter' && state.status === 'answering') {
-                        e.preventDefault();
-                        dispatch({ type: 'SUBMIT_ANSWER' });
-                      }
-                    }}
                     placeholder="type romaji..."
                     className="answer-input"
                   />
