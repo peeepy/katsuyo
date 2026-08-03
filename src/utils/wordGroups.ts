@@ -3,13 +3,13 @@ import { type Word } from '../types';
 export const GROUP_META = [
   { key: 'godan',        label: 'Godan Verb',                    category: 'verb' },
   { key: 'ichidan',      label: 'Ichidan Verb',                  category: 'verb' },
-  { key: 'iku',          label: 'Irregular Verb (行く)',          category: 'verb' },
-  { key: 'kuru',         label: 'Irregular Verb (来る)',          category: 'verb' },
-  { key: 'suru',         label: 'Irregular Verb (する)',          category: 'verb' },
-  { key: 'aru',          label: 'Irregular Verb (ある)',          category: 'verb' },
+  { key: 'iku',          label: '行く verb',          category: 'verb' },
+  { key: 'kuru',         label: '来る verb',          category: 'verb' },
+  { key: 'suru',         label: 'する verbs',          category: 'verb' },
+  { key: 'aru',          label: 'ある verb',          category: 'verb' },
   { key: 'i-adjective',  label: 'い-Adjective',                  category: 'adj'  },
   { key: 'na-adjective', label: 'な-Adjective',                  category: 'adj'  },
-  { key: 'ii',           label: 'Irregular Adjective (いい/よい)', category: 'adj'  },
+  { key: 'ii',           label: 'いい adjective', category: 'adj'  },
 ] as const;
 
 export type WordGroup = typeof GROUP_META[number]['key'];
