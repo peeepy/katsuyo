@@ -1,26 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap');
 
 :root {
-  --ink: #221d17; 
-  --ink-soft: #544a3c; 
+  --ink: #221d17;
+  --ink-soft: #544a3c;
   --muted: #8a7b63;
-  --paper: #e9dfc7; 
-  --card: #f4ecd8; 
+  --paper: #e9dfc7;
+  --card: #f4ecd8;
   --card-2: #efe4cb;
-  --line: #c9b98e; 
+  --line: #c9b98e;
   --line-soft: #dccfa9;
-  --hanko: #b23a29; 
+  --hanko: #b23a29;
   --hanko-dark: #8c2b1d;
   --indigo: #33465c;
-  --good: #3c6e4a; 
+  --good: #3c6e4a;
   --radius: 6px;
-  --shadow: 0 1px 0 rgba(34,29,23,.06), 0 8px 24px -12px rgba(34,29,23,.25);
+  --shadow: 0 1px 0 rgba(34, 29, 23, .06), 0 8px 24px -12px rgba(34, 29, 23, .25);
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
-html, body {
-  margin: 0; 
+html,
+body {
+  margin: 0;
   padding: 0;
 }
 
@@ -39,39 +42,42 @@ body {
 }
 
 /* ---------- hero ---------- */
-.hero { text-align: center; margin-bottom: 26px; }
+.hero {
+  text-align: center;
+  margin-bottom: 26px;
+}
 
 .eyebrow {
-  font-size: .72rem; 
-  letter-spacing: .22em; 
+  font-size: .72rem;
+  letter-spacing: .22em;
   text-transform: uppercase;
-  color: var(--hanko); 
-  font-weight: 700; 
+  color: var(--hanko);
+  font-weight: 700;
   margin-bottom: 10px;
 }
 
 .title {
-  font-family: inherit; 
+  font-family: inherit;
   font-weight: 900;
-  font-size: clamp(2.6rem, 9vw, 4rem); 
+  font-size: clamp(2.6rem, 9vw, 4rem);
   margin: 0 0 6px;
-  letter-spacing: .04em; 
+  letter-spacing: .04em;
   color: var(--ink);
 }
 
 .sub {
-  font-size: 1rem; 
-  color: var(--ink-soft); 
-  margin: 0 0 4px; 
+  font-size: 1rem;
+  color: var(--ink-soft);
+  margin: 0 0 4px;
   font-weight: 700;
 }
 
 /* ---------- cards ---------- */
 .card {
-  background: var(--card); 
+  background: var(--card);
   border: 1px solid var(--line);
-  border-radius: var(--radius); 
-  padding: 22px 20px; 
+  border-radius: var(--radius);
+  padding: 22px 20px;
   box-shadow: var(--shadow);
   position: relative;
 }
@@ -82,76 +88,89 @@ body {
 }
 
 /* ---------- form rows ---------- */
-.field-group { margin-bottom: 20px; }
-.field-group:last-child { margin-bottom: 0; }
+.field-group {
+  margin-bottom: 20px;
+}
+
+.field-group:last-child {
+  margin-bottom: 0;
+}
 
 .label {
-  display: block; 
-  font-size: .72rem; 
-  font-weight: 700; 
+  display: block;
+  font-size: .72rem;
+  font-weight: 700;
   letter-spacing: .08em;
-  text-transform: uppercase; 
-  color: var(--ink-soft); 
+  text-transform: uppercase;
+  color: var(--ink-soft);
   margin-bottom: 8px;
 }
 
 .input-number {
-  width: 100%; 
-  text-align: center; 
-  font-size: 1.1rem; 
-  font-weight: 700; 
+  width: 100%;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 700;
   font-family: 'Zen Kaku Gothic New', sans-serif;
-  border: 1px solid var(--line); 
-  border-radius: var(--radius); 
-  padding: 10px; 
-  background: #fffdf6; 
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px;
+  background: #fffdf6;
   color: var(--ink);
 }
 
 .select {
-  width: 100%; 
-  font-size: .95rem; 
-  padding: 10px 12px; 
+  width: 100%;
+  font-size: .95rem;
+  padding: 10px 12px;
   border-radius: var(--radius);
-  border: 1px solid var(--line); 
+  border: 1px solid var(--line);
   background: #fffdf6 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="%23544a3c" d="M7 10l5 5 5-5z"/></svg>') no-repeat right 12px center;
-  appearance: none; 
-  -webkit-appearance: none; 
-  color: var(--ink); 
+  appearance: none;
+  -webkit-appearance: none;
+  color: var(--ink);
   font-family: 'Zen Kaku Gothic New', sans-serif;
 }
 
-.select:focus, .input-number:focus, .answer-input:focus {
-  outline: 2px solid var(--indigo); 
+.select:focus,
+.input-number:focus,
+.answer-input:focus {
+  outline: 2px solid var(--indigo);
   outline-offset: 1px;
 }
 
 .segmented {
-  display: flex; 
-  border: 1px solid var(--line); 
-  border-radius: var(--radius); 
+  display: flex;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
   overflow: hidden;
 }
 
 .seg-btn {
-  flex: 1; 
-  padding: 11px 8px; 
-  background: var(--card-2); 
-  border: none; 
+  flex: 1;
+  padding: 11px 8px;
+  background: var(--card-2);
+  border: none;
   color: var(--ink-soft);
-  font-size: .85rem; 
-  font-weight: 700; 
-  cursor: pointer; 
+  font-size: .85rem;
+  font-weight: 700;
+  cursor: pointer;
   font-family: 'Zen Kaku Gothic New', sans-serif;
   border-right: 1px solid var(--line);
 }
 
-.seg-btn:last-child { border-right: none; }
-.seg-active { background: var(--indigo); color: #f4ecd8; }
+.seg-btn:last-child {
+  border-right: none;
+}
+
+.seg-active {
+  background: var(--indigo);
+  color: #f4ecd8;
+}
 
 .field-group-row {
-  display: flex; 
-  align-items: center; 
+  display: flex;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
 }
@@ -166,20 +185,26 @@ input[type="checkbox"] {
 /* ---------- buttons ---------- */
 .btn-primary {
   width: 100%;
-  padding: 13px 16px; 
-  border-radius: var(--radius); 
+  padding: 13px 16px;
+  border-radius: var(--radius);
   border: 1px solid var(--hanko);
-  font-weight: 700; 
-  font-size: .92rem; 
-  cursor: pointer; 
+  font-weight: 700;
+  font-size: .92rem;
+  cursor: pointer;
   font-family: 'Zen Kaku Gothic New', sans-serif;
-  background: var(--hanko); 
+  background: var(--hanko);
   color: #fbf2e2;
   margin-top: 10px;
 }
 
-.btn-primary:hover { background: var(--hanko-dark); }
-.btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+.btn-primary:hover {
+  background: var(--hanko-dark);
+}
+
+.btn-primary:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
 
 .btn-primary-compact {
   width: auto;
@@ -189,109 +214,125 @@ input[type="checkbox"] {
 
 /* ---------- quiz ---------- */
 .quiz-top {
-  display: flex; 
-  justify-content: space-between; 
-  align-items: baseline; 
-  margin-bottom: 14px; 
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 14px;
   padding: 0 2px;
 }
 
 .streak-label {
-  font-size: .85rem; 
-  font-weight: 700; 
+  font-size: .85rem;
+  font-weight: 700;
   color: var(--hanko);
 }
 
 .stimulus {
-  font-size: clamp(2rem, 9vw, 2.7rem); 
+  font-size: clamp(2rem, 9vw, 2.7rem);
   font-weight: 700;
-  line-height: 1.5; 
-  letter-spacing: .02em; 
+  line-height: 1.5;
+  letter-spacing: .02em;
   word-break: keep-all;
 }
 
 .stimulus ruby rt {
-  font-size: .36em; 
-  color: var(--ink-soft); 
+  font-size: .36em;
+  color: var(--ink-soft);
   font-weight: 700;
 }
 
 .instruction {
-  margin-top: 16px; 
-  font-size: 1.4rem; 
-  color: var(--indigo); 
+  margin-top: 16px;
+  font-size: 1.4rem;
+  color: var(--indigo);
   font-weight: 700;
 }
 
 .answer-row {
-  display: flex; 
-  gap: 10px; 
+  display: flex;
+  gap: 10px;
   margin-top: 22px;
 }
 
 .answer-input {
-  flex: 1; 
-  font-size: 1.3rem; 
-  padding: 12px 14px; 
+  flex: 1;
+  font-size: 1.3rem;
+  padding: 12px 14px;
   border-radius: var(--radius);
-  border: 1px solid var(--line); 
-  background: #fffdf6; 
+  border: 1px solid var(--line);
+  background: #fffdf6;
   color: var(--ink);
-  letter-spacing: .05em; 
+  letter-spacing: .05em;
   font-weight: 500;
   background-image: repeating-linear-gradient(90deg, transparent, transparent 30px, var(--line-soft) 30px, var(--line-soft) 31px);
 }
 
-.answer-input:disabled { background: var(--card-2); color: var(--muted); }
+.answer-input:disabled {
+  background: var(--card-2);
+  color: var(--muted);
+}
 
 .feedback {
-  margin-top: 20px; 
-  padding-top: 18px; 
+  margin-top: 20px;
+  padding-top: 18px;
   border-top: 1px dashed var(--line);
-  display: flex; 
-  align-items: center; 
-  gap: 16px; 
+  display: flex;
+  align-items: center;
+  gap: 16px;
   text-align: left;
 }
 
 .stamp {
-  font-family: inherit; 
-  font-size: 3.5rem; 
-  font-weight: 800; 
+  font-family: inherit;
+  font-size: 3.5rem;
+  font-weight: 800;
   line-height: 1;
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
-  transform: rotate(-8deg); 
+  transform: rotate(-8deg);
   animation: stamp-in .28s ease-out;
 }
 
-.stamp-good { color: var(--good); }
-.stamp-bad { color: var(--hanko); transform: rotate(6deg); }
+.stamp-good {
+  color: var(--good);
+}
+
+.stamp-bad {
+  color: var(--hanko);
+  transform: rotate(6deg);
+}
 
 @keyframes stamp-in {
-  from { transform: scale(1.6) rotate(-8deg); opacity: 0; } 
-  to { transform: scale(1) rotate(-8deg); opacity: 1; }
+  from {
+    transform: scale(1.6) rotate(-8deg);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1) rotate(-8deg);
+    opacity: 1;
+  }
 }
 
 .correct-kana {
-  font-size: 1.3rem; 
-  display: block; 
-  margin-top: 2px; 
+  font-size: 1.3rem;
+  display: block;
+  margin-top: 2px;
   font-weight: 700;
 }
 
 .correct-romaji {
-  font-size: .78rem; 
-  color: var(--muted); 
+  font-size: .78rem;
+  color: var(--muted);
   font-weight: 400;
 }
 
 /* ---------- summary ---------- */
 .score-big {
-  font-size: 3rem; 
-  font-weight: 800; 
+  font-size: 3rem;
+  font-weight: 800;
   color: var(--hanko);
   margin-bottom: 6px;
 }
@@ -312,9 +353,35 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
+.form-warning-tooltip {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: var(--hanko);
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 6px;
+  animation: warning-fade-in .15s ease-out;
+}
+
+@keyframes warning-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .modal-overlay {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: rgba(34, 29, 23, 0.6);
   display: flex;
   align-items: center;
@@ -330,7 +397,7 @@ input[type="checkbox"] {
   width: 100%;
   max-width: 500px;
   border: 1px solid var(--line);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
 }
 
 .btn-ghost {
@@ -407,4 +474,104 @@ input[type="checkbox"] {
   position: absolute;
   top: 16px;
   right: 16px;
+}
+
+/* ---------- Word type hint ---------- */
+.stimulus-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 6px;
+}
+
+.hint-wrap {
+  position: relative;
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.hint-btn {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--muted);
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.5;
+  padding: 0;
+}
+
+.hint-btn:hover,
+.hint-btn:focus {
+  opacity: 1;
+  outline: none;
+  border-color: var(--indigo);
+  color: var(--indigo);
+}
+
+.hint-tooltip {
+  position: absolute;
+  top: 26px;
+  right: 0;
+  background: var(--ink);
+  color: var(--card);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: var(--radius);
+  white-space: nowrap;
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+/* wider container/modal so the two-column settings layout has room */
+.container {
+  max-width: 760px;
+}
+
+.modal-content {
+  max-width: 760px;
+}
+
+/* checkbox grid adapts to whatever width it's given instead of a fixed 2 columns */
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+}
+
+.settings-columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 680px) {
+  .settings-columns {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.category-header {
+  margin-bottom: 8px;
+}
+
+.category-toggle {
+  gap: 10px;
+}
+
+.category-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.section-muted {
+  opacity: 0.45;
 }

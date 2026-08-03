@@ -5176,7 +5176,7 @@ export const WORDS: Word[] = [
   {
     "kanji": "有る",
     "reading": "ある",
-    "pos": "godan",
+    "pos": "irregular",
     "english": "to be"
   },
   {
@@ -5748,6 +5748,12 @@ export const WORDS: Word[] = [
     "reading": "もってくる",
     "pos": "irregular",
     "english": "to bring (something)"
+  },
+  {
+    "kanji": "いい",
+    "reading": "いい",
+    "pos": "irregular",
+    "english": "good"
   },
   {
     "kanji": "持つ",
@@ -15376,7 +15382,7 @@ export const WORDS: Word[] = [
   {
     "kanji": "行く",
     "reading": "いく",
-    "pos": "godan",
+    "pos": "irregular",
     "english": "to go"
   },
   {

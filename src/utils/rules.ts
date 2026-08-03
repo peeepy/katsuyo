@@ -834,7 +834,7 @@ export const rules: any = {
     "causative passive past": { forms: [ { "before": "来る", "after": "来させられた" }, { "before": "くる", "after": "こさせられた" } ] },
     "causative passive past negative": { forms: [ { "before": "来る", "after": "来させられなかった" }, { "before": "くる", "after": "こさせられなかった" } ] },
     "progressive": { forms: [ { "before": "来る", "after": "来ている" }, { "before": "くる", "after": "きている" } ] },
-    "progressive negative": { forms: [ { "before": "来る", "after": "来ている" }, { "before": "くる", "after": "きていない" } ] },
+    "progressive negative": { forms: [ { "before": "来る", "after": "来ていない" }, { "before": "くる", "after": "きていない" } ] },
     "polite progressive": { forms: [ { "before": "来る", "after": "来ています" }, { "before": "くる", "after": "きています" } ] },
     "polite progressive negative": { forms: [ { "before": "来る", "after": "来ていません" }, { "before": "くる", "after": "きていません" } ] },
     "progressive past": { forms: [ { "before": "来る", "after": "来ていた" }, { "before": "くる", "after": "きていた" } ] },
@@ -903,6 +903,32 @@ export const rules: any = {
     "volitional": { forms: [ { "before": "する", "after": "しよう" } ] },
     "polite volitional": { forms: [ { "before": "する", "after": "しましょう" } ] },
   },
+"aru": {
+  "negative": {
+    forms: [
+      { "before": "有る", "after": "ない" },
+      { "before": "ある", "after": "ない" },
+    ],
+  },
+  "polite": { forms: [{ "before": "る", "after": "ります" }] },
+  "polite negative": { forms: [{ "before": "る", "after": "りません" }] },
+  "past": { forms: [{ "before": "る", "after": "った" }] },
+  "past negative": {
+    forms: [
+      { "before": "有る", "after": "なかった" },
+      { "before": "ある", "after": "なかった" },
+    ],
+  },
+  "polite past": { forms: [{ "before": "る", "after": "りました" }] },
+  "polite past negative": { forms: [{ "before": "る", "after": "りませんでした" }] },
+  "te-form": { forms: [{ "before": "る", "after": "って" }] },
+  "te-form negative": {
+    forms: [
+      { "before": "有る", "after": "なくて" },
+      { "before": "ある", "after": "なくて" },
+    ],
+  },
+},
 
   "i-adjective": {
     "negative": { forms: [ { "before": "い", "after": "くない" } ] },
