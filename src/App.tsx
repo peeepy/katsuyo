@@ -1,10 +1,16 @@
 import { useReducer, useEffect, useRef, useState } from 'react';
 import * as wanakana from 'wanakana';
 import './App.css';
+import './theme/themes.css';
 import { type ConjugationResult, type DrillSettings, type FormKey } from './types';
 import { createQuestionsList, getEligibleWords } from './engine';
 import { quizReducer, checkIsCorrect, type QuizState } from './quizState';
 import { GROUP_META, getWordGroupLabel, type WordGroup } from './utils/wordGroups';
+import { ThemeProvider, useTheme } from './theme/ThemeContext';
+import { ThemeSelector } from './components/ThemeSelector';
+import { ThemeQuickSwitcher } from './components/ThemeQuickSwitcher.tsx';
+import { SettingsShell } from './components/SettingsShell';
+import { FlashcardQuiz } from './components/FlashcardQuiz';
 
 const VERB_TYPE_KEYS: WordGroup[] = GROUP_META.filter(g => g.category === 'verb').map(g => g.key);
 const ADJ_TYPE_KEYS: WordGroup[] = GROUP_META.filter(g => g.category === 'adj').map(g => g.key);
@@ -66,6 +72,15 @@ function WordTypeHint({ label }: { label: string }) {
 }
 
 export default function App() {
+  return (
+    <ThemeProvider>
+      <AppInner />
+    </ThemeProvider>
+  );
+}
+
+function AppInner() {
+  const { theme } = useTheme();
   const [state, dispatch] = useReducer(quizReducer, initialState);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
 
@@ -85,6 +100,13 @@ export default function App() {
     }
     const initialCount = state.settings.numQuestions === 0 ? 20 : state.settings.numQuestions;
     dispatch({ type: 'START', payload: createQuestionsList(initialCount, state.settings) });
+  };
+
+  const advance = () => {
+    if (state.settings.numQuestions === 0 && state.currentIndex >= state.questions.length - 3) {
+      dispatch({ type: 'APPEND_QUESTIONS', payload: createQuestionsList(20, state.settings) });
+    }
+    dispatch({ type: 'NEXT_QUESTION' });
   };
 
   useEffect(() => {
@@ -136,155 +158,175 @@ export default function App() {
     );
   };
 
+  const showFlashcardView = theme === 'c' && (state.status === 'answering' || state.status === 'graded') && currentQ;
+
   return (
-    <div className="container" style={{ position: 'relative' }}>
-
-      {state.status !== 'idle' && (
-        <div className="header-actions" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          {state.settings.numQuestions === 0 && (state.status === 'answering' || state.status === 'graded') && (
-            <button onClick={() => dispatch({ type: 'END_SESSION' })} className="btn-ghost" style={{ fontSize: '0.85rem', padding: '4px 8px', color: 'var(--hanko)' }}>
-              Stop Drill
-            </button>
-          )}
-          <button onClick={() => setShowSettingsModal(true)} className="btn-ghost" style={{ fontSize: '1.2rem', padding: '4px 8px' }}>
-            ⚙️
-          </button>
-        </div>
-      )}
-
-      <header className="hero">
-        <div className="eyebrow">Katsuyō · 活用</div>
-        <h1 className="title">活用</h1>
-        <p className="sub">Japanese conjugation drills</p>
-      </header>
-
-      {state.status === 'idle' && (
-        <div className="card">
-          <SettingsPanel settings={state.settings} onChange={(s) => dispatch({ type: 'UPDATE_SETTINGS', payload: { settings: s } })} />
-          <button onClick={startQuiz} className="btn-primary" style={{ marginTop: 24, fontSize: '1.2rem', padding: '16px' }}>
-            Start Drill
-          </button>
-        </div>
-      )}
-
-      {(state.status === 'answering' || state.status === 'graded') && currentQ && (
-        <div>
-          <div className="quiz-top">
-            <span>問 {state.currentIndex + 1} {state.settings.numQuestions === 0 ? ' (∞)' : `/ ${state.questions.length}`}</span>
-            <span className="streak-label">streak {state.streak}</span>
+    <div className={`app-root ${showFlashcardView ? 'app-root-fullbleed' : ''}`}>
+      {showFlashcardView ? (
+        <FlashcardQuiz
+          state={state}
+          settings={state.settings}
+          isCorrect={isCorrect}
+          dispatch={dispatch}
+          renderRuby={renderRuby}
+          onNext={advance}
+          onOpenSettings={() => setShowSettingsModal(true)}
+        />
+      ) : (
+        <div className="container">
+          <div className="header-actions">
+            <ThemeQuickSwitcher />
+            {state.status !== 'idle' && state.settings.numQuestions === 0 && (state.status === 'answering' || state.status === 'graded') && (
+              <button onClick={() => dispatch({ type: 'END_SESSION' })} className="btn-ghost btn-stop-drill">
+                Stop Drill
+              </button>
+            )}
+            {state.status !== 'idle' && (
+              <button onClick={() => setShowSettingsModal(true)} className="icon-btn" aria-label="Settings">
+                ⚙️
+              </button>
+            )}
           </div>
 
-          <div className="card card-center">
-            <div className="stimulus-row">
-              <div className="stimulus">
-                {renderRuby(currentQ.source)}
-              </div>
-              <WordTypeHint label={getWordGroupLabel(currentQ.group)} />
+          <header className="hero">
+            <div className="eyebrow">Katsuyō · 活用</div>
+            <h1 className="title">活用</h1>
+            <p className="sub">Japanese conjugation drills</p>
+          </header>
+
+          {state.status === 'idle' && (
+            <div className="card">
+              <SettingsPanel settings={state.settings} onChange={(s) => dispatch({ type: 'UPDATE_SETTINGS', payload: { settings: s } })} />
+              <button onClick={startQuiz} className="btn-primary btn-start">
+                Start Drill
+              </button>
             </div>
+          )}
 
-            {state.settings.translation !== 'off' && currentQ.english && (
-              <div className={state.settings.translation === 'hover' ? 'translation-hover' : 'translation'}>
-                {currentQ.english}
+          {(state.status === 'answering' || state.status === 'graded') && currentQ && (
+            <div>
+              <div className="quiz-top">
+                <span>問 {state.currentIndex + 1} {state.settings.numQuestions === 0 ? ' (∞)' : `/ ${state.questions.length}`}</span>
+                <span className="streak-label">streak {state.streak}</span>
               </div>
-            )}
 
-            <div className="instruction">
-              → {currentQ.instruction}
-            </div>
-
-            <div className="answer-row">
-              <input
-                ref={inputRef}
-                type="text"
-                disabled={state.status === 'graded'}
-                value={state.userAnswer}
-                onChange={e => dispatch({
-                  type: 'TYPE_ANSWER',
-                  payload: wanakana.toKana(e.target.value, { IMEMode: 'toHiragana' })
-                })}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' && state.status === 'answering') {
-                    e.preventDefault();
-                    dispatch({ type: 'SUBMIT_ANSWER' });
-                  }
-                }}
-                placeholder="type romaji..."
-                className="answer-input"
-              />
-              {state.status === 'answering' ? (
-                <button onClick={() => dispatch({ type: 'SUBMIT_ANSWER' })} className="btn-primary btn-primary-compact">Check</button>
-              ) : (
-                <button
-                  ref={nextBtnRef}
-                  onClick={() => {
-                    if (state.settings.numQuestions === 0 && state.currentIndex >= state.questions.length - 3) {
-                      dispatch({ type: 'APPEND_QUESTIONS', payload: createQuestionsList(20, state.settings) });
-                    }
-                    dispatch({ type: 'NEXT_QUESTION' });
-                  }}
-                  className="btn-primary btn-primary-compact"
-                >
-                  Next
-                </button>
+              {theme === 'd' && state.settings.numQuestions !== 0 && (
+                <div className="progress-track" aria-hidden="true">
+                  <div
+                    className="progress-fill"
+                    style={{ width: `${(state.currentIndex / state.questions.length) * 100}%` }}
+                  />
+                </div>
               )}
-            </div>
 
-            {state.status === 'graded' && (
-              <div className="feedback">
-                <div className={isCorrect ? "stamp stamp-good" : "stamp stamp-bad"}>
-                  {isCorrect ? '○' : '✕'}
+              <div className="card card-center">
+                <div className="stimulus-row">
+                  <div className="stimulus">
+                    {renderRuby(currentQ.source)}
+                  </div>
+                  <WordTypeHint label={getWordGroupLabel(currentQ.group)} />
                 </div>
-                <div style={{ flex: 1 }}>
-                  {isCorrect ? (
-                    <div style={{ fontWeight: 'bold', color: 'var(--good)' }}>Correct!</div>
+
+                {state.settings.translation !== 'off' && currentQ.english && (
+                  <div className={state.settings.translation === 'hover' ? 'translation-hover' : 'translation'}>
+                    {currentQ.english}
+                  </div>
+                )}
+
+                <div className="instruction">
+                  → {currentQ.instruction}
+                </div>
+
+                <div className="answer-row">
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    disabled={state.status === 'graded'}
+                    value={state.userAnswer}
+                    onChange={e => dispatch({
+                      type: 'TYPE_ANSWER',
+                      payload: wanakana.toKana(e.target.value, { IMEMode: 'toHiragana' })
+                    })}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter' && state.status === 'answering') {
+                        e.preventDefault();
+                        dispatch({ type: 'SUBMIT_ANSWER' });
+                      }
+                    }}
+                    placeholder="type romaji..."
+                    className="answer-input"
+                  />
+                  {state.status === 'answering' ? (
+                    <button onClick={() => dispatch({ type: 'SUBMIT_ANSWER' })} className="btn-primary btn-primary-compact">Check</button>
                   ) : (
-                    <div style={{ marginBottom: 12 }}>
-                      <div>Correct answer:</div>
-                      <div className="correct-kana">
-                        {renderRuby(currentQ.target)}
-                      </div>
-                      <div className="correct-romaji">
-                        {wanakana.toRomaji(currentQ.target.reading)}
-                      </div>
-                    </div>
-                  )}
-                  {!isCorrect && currentQ.target.explanation.length > 0 && (
-                    <div className="explanation-box">
-                      <div style={{ fontSize: '0.8rem', fontWeight: 'bold', marginBottom: 4, textTransform: 'uppercase' }}>Rule breakdown:</div>
-                      <ol className="explanation-list">
-                        {currentQ.target.explanation.map((note, i) => <li key={i}>{note}</li>)}
-                      </ol>
-                    </div>
+                    <button
+                      ref={nextBtnRef}
+                      onClick={advance}
+                      className="btn-primary btn-primary-compact"
+                    >
+                      Next
+                    </button>
                   )}
                 </div>
+
+                {state.status === 'graded' && (
+                  <div className="feedback">
+                    <div className={isCorrect ? "stamp stamp-good" : "stamp stamp-bad"}>
+                      {isCorrect ? '○' : '✕'}
+                    </div>
+                    <div className="feedback-body">
+                      {isCorrect ? (
+                        <div className="feedback-correct-label">Correct!</div>
+                      ) : (
+                        <div className="feedback-answer-block">
+                          <div>Correct answer:</div>
+                          <div className="correct-kana">
+                            {renderRuby(currentQ.target)}
+                          </div>
+                          <div className="correct-romaji">
+                            {wanakana.toRomaji(currentQ.target.reading)}
+                          </div>
+                        </div>
+                      )}
+                      {!isCorrect && currentQ.target.explanation.length > 0 && (
+                        <div className="explanation-box">
+                          <div className="explanation-title">Rule breakdown:</div>
+                          <ol className="explanation-list">
+                            {currentQ.target.explanation.map((note, i) => <li key={i}>{note}</li>)}
+                          </ol>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {state.status === 'summary' && (
-        <div className="card card-center">
-          <h2>Session Complete</h2>
-          <div className="score-big">{state.correctCount} / {state.questions.length}</div>
-          <p>Longest streak: <strong>{state.longestStreak}</strong></p>
-
-          {state.missed.length > 0 && (
-            <div style={{ textAlign: 'left', marginTop: 20 }}>
-              <h3>Missed Conjugations:</h3>
-              <ul style={{ paddingLeft: 20 }}>
-                {state.missed.map((m, idx) => (
-                  <li key={idx} style={{ marginBottom: 8 }}>
-                    {renderRuby(m.source)} ({m.label}) → <strong>{renderRuby(m.target)}</strong>
-                  </li>
-                ))}
-              </ul>
             </div>
           )}
 
-          <button onClick={() => dispatch({ type: 'GO_HOME' })} className="btn-primary" style={{ marginTop: 20 }}>
-            Main Menu
-          </button>
+          {state.status === 'summary' && (
+            <div className="card card-center">
+              <h2>Session Complete</h2>
+              <div className="score-big">{state.correctCount} / {state.questions.length}</div>
+              <p>Longest streak: <strong>{state.longestStreak}</strong></p>
+
+              {state.missed.length > 0 && (
+                <div className="missed-block">
+                  <h3>Missed Conjugations:</h3>
+                  <ul className="missed-list">
+                    {state.missed.map((m, idx) => (
+                      <li key={idx} className="missed-item">
+                        {renderRuby(m.source)} ({m.label}) → <strong>{renderRuby(m.target)}</strong>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <button onClick={() => dispatch({ type: 'GO_HOME' })} className="btn-primary btn-main-menu">
+                Main Menu
+              </button>
+            </div>
+          )}
         </div>
       )}
 
@@ -302,29 +344,20 @@ export default function App() {
 function SettingsModal({ initialSettings, onSave, onClose }: { initialSettings: DrillSettings, onSave: (s: DrillSettings) => void, onClose: () => void }) {
   const [localSettings, setLocalSettings] = useState<DrillSettings>(initialSettings);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        onClose();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
-
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h3 style={{ margin: '0 0 16px 0' }}>Settings</h3>
-        <div style={{ maxHeight: '70vh', overflowY: 'auto' }}>
-            <SettingsPanel settings={localSettings} onChange={setLocalSettings} />
+    <SettingsShell
+      title="Settings"
+      onClose={onClose}
+      footer={(
+        <div className="settings-modal-actions">
+          <button onClick={onClose} className="btn-ghost settings-modal-btn">Cancel</button>
+          <button onClick={() => onSave(localSettings)} className="btn-primary settings-modal-btn">Close & Apply</button>
         </div>
-        <div style={{ display: 'flex', gap: '12px', marginTop: 16 }}>
-          <button onClick={onClose} className="btn-ghost" style={{ flex: 1 }}>Cancel</button>
-          <button onClick={() => onSave(localSettings)} className="btn-primary" style={{ flex: 1, marginTop: 0 }}>Close & Apply</button>
-        </div>
-      </div>
-    </div>
+      )}
+    >
+      {/* <ThemeSelector /> */}
+      <SettingsPanel settings={localSettings} onChange={setLocalSettings} />
+    </SettingsShell>
   );
 }
 
@@ -412,8 +445,8 @@ function SettingsPanel({ settings, onChange }: { settings: DrillSettings, onChan
   return (
     <div>
       <div className="field-group-row">
-        <label className="label" style={{ marginBottom: 0 }}>Questions (0 = ∞)</label>
-        <input type="number" min={0} max={999} value={settings.numQuestions} onChange={e => onChange({ ...settings, numQuestions: Number(e.target.value) })} className="input-number" style={{ width: 80 }} />
+        <label className="label label-inline">Questions (0 = ∞)</label>
+        <input type="number" min={0} max={999} value={settings.numQuestions} onChange={e => onChange({ ...settings, numQuestions: Number(e.target.value) })} className="input-number" />
       </div>
 
       <div className="field-group">
@@ -462,7 +495,7 @@ function SettingsPanel({ settings, onChange }: { settings: DrillSettings, onChan
         </div>
       </div>
 
-      <hr style={{ border: 0, borderTop: '1px solid var(--line-soft)', margin: '20px 0' }} />
+      <hr className="divider" />
 
       <div className="settings-columns">
         <div className={`settings-section ${!verbsEnabled ? 'section-muted' : ''}`}>
@@ -476,7 +509,7 @@ function SettingsPanel({ settings, onChange }: { settings: DrillSettings, onChan
             <div className="form-warning-tooltip">At least one of Verbs or Adjectives must stay enabled.</div>
           )}
 
-          <label className="label" style={{ marginTop: 8 }}>Word Types</label>
+          <label className="label label-tight">Word Types</label>
           <div className="checkbox-grid">
             {VERB_TYPE_KEYS.map(key => (
               <label key={key} className="checkbox-label">
@@ -486,7 +519,7 @@ function SettingsPanel({ settings, onChange }: { settings: DrillSettings, onChan
             ))}
           </div>
 
-          <label className="label" style={{ marginTop: 16 }}>Forms</label>
+          <label className="label label-tight-lg">Forms</label>
           <div className="checkbox-grid">
             {VERB_FORM_KEYS.map(key => (
               <label key={key} className="checkbox-label">
@@ -511,7 +544,7 @@ function SettingsPanel({ settings, onChange }: { settings: DrillSettings, onChan
             <div className="form-warning-tooltip">At least one of Verbs or Adjectives must stay enabled.</div>
           )}
 
-          <label className="label" style={{ marginTop: 8 }}>Word Types</label>
+          <label className="label label-tight">Word Types</label>
           <div className="checkbox-grid">
             {ADJ_TYPE_KEYS.map(key => (
               <label key={key} className="checkbox-label">
@@ -521,7 +554,7 @@ function SettingsPanel({ settings, onChange }: { settings: DrillSettings, onChan
             ))}
           </div>
 
-          <label className="label" style={{ marginTop: 16 }}>Forms</label>
+          <label className="label label-tight-lg">Forms</label>
           <div className="checkbox-grid">
             {ADJ_FORM_KEYS.map(key => (
               <label key={key} className="checkbox-label">

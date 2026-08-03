@@ -1,0 +1,125 @@
+/* IMPORTANT INVARIANT: every theme keeps --paper and --card as LIGHT surfaces,
+   and --ink as a DARK color that reads on both of them. Do not flip --ink to
+   a light color for a theme — that's what broke theme C the first time
+   around (it made the homepage title/dropdowns invisible along with
+   everything else that isn't the one component you actually wanted dark).
+   If a future theme wants a genuinely dark surface somewhere, scope a new
+   variable to that specific component instead of repurposing --ink globally. */
+
+/* Theme A — Washi: ink & paper, hanko stamp (this is just the :root defaults
+   from App.css restated explicitly, so the four themes are easy to compare
+   side by side and so nothing relies on cascade fallback). */
+[data-theme="a"] {
+    --ink: #221d17;
+    --ink-soft: #544a3c;
+    --muted: #8a7b63;
+    --paper: #e9dfc7;
+    --card: #f4ecd8;
+    --card-2: #efe4cb;
+    --line: #c9b98e;
+    --line-soft: #dccfa9;
+    --accent: #b23a29;
+    --accent-dark: #8c2b1d;
+    --accent-ink: #fbf2e2;
+    --indigo: #33465c;
+    --good: #3c6e4a;
+    --bad: #b23a29;
+    --radius: 6px;
+    --radius-lg: 10px;
+    --shadow: 0 1px 0 rgba(34, 29, 23, .06), 0 8px 24px -12px rgba(34, 29, 23, .25);
+}
+
+[data-theme="a"] .card-center,
+[data-theme="a"] .flashcard-card {
+    background: repeating-linear-gradient(90deg, transparent, transparent 39px, var(--line-soft) 39px, var(--line-soft) 40px), var(--card);
+}
+
+/* Theme B — Minimal: flat, quiet, no texture, no drama. */
+[data-theme="b"] {
+    --ink: #16181d;
+    --ink-soft: #4b515c;
+    --muted: #8b93a1;
+    --paper: #f7f8fa;
+    --card: #ffffff;
+    --card-2: #eef0f3;
+    --line: #dde1e7;
+    --line-soft: #e8eaee;
+    --accent: #2f6feb;
+    --accent-dark: #2557bd;
+    --accent-ink: #ffffff;
+    --indigo: #16181d;
+    --good: #1a8f5a;
+    --bad: #d1403a;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --shadow: 0 1px 2px rgba(16, 18, 22, .06);
+}
+
+[data-theme="b"] .stamp {
+    transform: none;
+    animation: none;
+}
+
+/* Theme C — Flashcard: light, high-contrast, distinguished by its full-bleed
+   swipe layout rather than by inverting colors. Accent is teal to keep it
+   visually distinct from B (blue) and D (orange/green). */
+[data-theme="c"] {
+    --ink: #1c2024;
+    --ink-soft: #4a5058;
+    --muted: #8b93a1;
+    --paper: #f3f5f8;
+    --card: #ffffff;
+    --card-2: #eef1f5;
+    --line: #e0e4ea;
+    --line-soft: #ececf1;
+    --accent: #0d9488;
+    --accent-dark: #0f766e;
+    --accent-ink: #ffffff;
+    --indigo: #334155;
+    --good: #16a34a;
+    --bad: #dc2626;
+    --radius: 14px;
+    --radius-lg: 20px;
+    --shadow: 0 10px 30px -12px rgba(15, 23, 42, .25);
+}
+
+[data-theme="c"] .flashcard-card {
+    border-top: 4px solid var(--accent);
+}
+
+/* Theme D — Arcade: bright, chunky, gamified. */
+[data-theme="d"] {
+    --ink: #1f2933;
+    --ink-soft: #3c4753;
+    --muted: #8b95a1;
+    --paper: #fbfdff;
+    --card: #ffffff;
+    --card-2: #eef8ff;
+    --line: #d6e4f0;
+    --line-soft: #e6f0f9;
+    --accent: #ff9600;
+    --accent-dark: #e08600;
+    --accent-ink: #ffffff;
+    --indigo: #1cb0f6;
+    --good: #58cc02;
+    --bad: #ff4b4b;
+    --radius: 16px;
+    --radius-lg: 20px;
+    --shadow: 0 4px 0 var(--line), 0 10px 24px -8px rgba(28, 176, 246, .35);
+}
+
+[data-theme="d"] .btn-primary {
+    border-width: 0;
+    box-shadow: 0 4px 0 var(--accent-dark);
+    transform: translateY(0);
+    transition: transform .08s ease, box-shadow .08s ease;
+}
+
+[data-theme="d"] .btn-primary:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--accent-dark);
+}
+
+[data-theme="d"] .seg-active {
+    background: var(--indigo);
+}
