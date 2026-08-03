@@ -217,7 +217,7 @@ export function generateExplanation(dictForm: string, group: WordGroup, targetLa
 
 export function generateInstruction(source: string, target: string, mode: string): string {
   if (mode === 'plain') {
-    return `→ ${target}`;
+    return target;
   }
 
   const setA = getFormFeatures(source);
