@@ -1,16 +1,17 @@
-/* INVARIANT (with one deliberate exception): every theme keeps --paper and
+/* INVARIANT (with deliberate exceptions): every theme keeps --paper and
    --card as LIGHT surfaces, and --ink as a DARK color that reads on both of
-   them, UNLESS the theme is meant to be dark app-wide (theme B) — in which
-   case every consumer of these tokens needs to have been checked for
+   them, UNLESS the theme is meant to be dark app-wide (themes B and C) — in
+   which case every consumer of these tokens needs to have been checked for
    hardcoded light-surface assumptions first (see App.css: .input-number,
    .select, .answer-input, .explanation-box all used to hardcode a cream/
    white background instead of reading --card, which is exactly what broke
    theme C the first time this was tried — flipping --ink to light made the
    homepage title/dropdowns invisible against those hardcoded backgrounds).
-   If a theme wants a dark surface in only ONE part of the app rather than
-   globally, don't repurpose --ink globally — scope new variable values to
-   that specific component instead, the way theme C's dark palette below is
-   scoped to .flashcard-screen and doesn't touch the rest of that theme. */
+   Theme C additionally has a THIRD tier: .flashcard-screen (the quiz itself)
+   re-scopes the tokens again to a darker/more saturated variant than the
+   rest of the dark theme, because it fully replaces the app shell in App.tsx
+   rather than nesting inside it (see the scoped block below), so it's safe
+   to make it a different shade of dark from the idle/settings screens. */
 
 /* Theme A — Washi: ink & paper, hanko stamp (this is just the :root defaults
    from App.css restated explicitly, so the four themes are easy to compare
@@ -84,28 +85,35 @@
     background: rgba(255, 255, 255, 0.06);
 }
 
-/* Theme C — Flashcard: distinguished by its full-bleed swipe layout, with
-   the quiz view itself going dark (scoped below) while the settings/idle
-   screens stay on this light shell. Accent is violet, distinct from B (blue)
-   and D (orange/green). */
+/* Theme C — Flashcard: distinguished by its full-bleed swipe layout. The
+   whole theme is dark now, not just the quiz — the idle screen and settings
+   sheet (below) use a slightly LIGHTER surface than the quiz card itself
+   (.flashcard-screen further down), so the quiz reads as the more focused,
+   dimmer view. Accent is violet, distinct from B (blue) and D (orange/green).
+   `.select`'s dropdown arrow is a baked-in SVG data URI and can't read a CSS
+   variable, so its fill is overridden separately below. */
 [data-theme="c"] {
-    --ink: #1c2024;
-    --ink-soft: #4a5058;
-    --muted: #8b93a1;
-    --paper: #f3f5f8;
-    --card: #ffffff;
-    --card-2: #eef1f5;
-    --line: #e0e4ea;
-    --line-soft: #ececf1;
-    --accent: #7c5cf0;
+    --ink: #ece9f7;
+    --ink-soft: #bcb6d6;
+    --muted: #8b84a8;
+    --paper: #241f36;
+    --card: #2f2a45;
+    --card-2: #3a3350;
+    --line: #453d5e;
+    --line-soft: #362f4d;
+    --accent: #8a68f2;
     --accent-dark: #6a49dc;
     --accent-ink: #ffffff;
-    --indigo: #334155;
-    --good: #16a34a;
-    --bad: #dc2626;
+    --indigo: #bcb6d6;
+    --good: #34d399;
+    --bad: #f87171;
     --radius: 14px;
     --radius-lg: 20px;
-    --shadow: 0 10px 30px -12px rgba(15, 23, 42, .25);
+    --shadow: 0 10px 30px -12px rgba(0, 0, 0, .5);
+}
+
+[data-theme="c"] .select {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="%23bcb6d6" d="M7 10l5 5 5-5z"/></svg>');
 }
 
 [data-theme="c"] .flashcard-card {
@@ -114,9 +122,8 @@
 
 /* The quiz view (.flashcard-screen) fully replaces the app shell in App.tsx
    (showFlashcardView swaps out .container entirely) rather than nesting
-   inside it, so re-scoping the surface tokens here only darkens the quiz
-   itself — the settings sheet and idle screen, which use the shared shell,
-   stay on the light palette above. */
+   inside it. It gets its OWN darker/more saturated variant of the same
+   palette above — darkest surface in the theme, reserved for the quiz. */
 [data-theme="c"] .flashcard-screen {
     --ink: #e9e6f5;
     --ink-soft: #b6b0cf;
