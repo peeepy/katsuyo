@@ -7,8 +7,8 @@ export type ThemeId = 'a' | 'b' | 'c' | 'd';
 // just different colors/type, a dedicated view component like FlashcardQuiz).
 export const THEME_META: Record<ThemeId, { label: string; description: string }> = {
   a: { label: 'Washi',     description: 'Ink & paper, hanko stamp' },
-  b: { label: 'Minimal',   description: 'Flat, quiet, no chrome' },
-  c: { label: 'Flashcard', description: 'Full-bleed, swipe-driven' },
+  b: { label: 'Dark',      description: 'Low-light, easy on the eyes' },
+  c: { label: 'Flashcard', description: 'Full-bleed, swipe-driven, dark quiz view' },
   d: { label: 'Arcade',    description: 'Bright, gamified, streak-driven' },
 };
 

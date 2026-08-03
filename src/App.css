@@ -208,7 +208,7 @@ button {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 10px;
-  background: #fffdf6;
+  background: var(--card);
   color: var(--ink);
   min-height: 44px;
 }
@@ -220,7 +220,10 @@ button {
   min-height: 44px;
   border-radius: var(--radius);
   border: 1px solid var(--line);
-  background: #fffdf6 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="%23544a3c" d="M7 10l5 5 5-5z"/></svg>') no-repeat right 12px center;
+  background-color: var(--card);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="%23544a3c" d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
   appearance: none;
   -webkit-appearance: none;
   color: var(--ink);
@@ -403,7 +406,7 @@ input[type="checkbox"] {
   padding: 12px 14px;
   border-radius: var(--radius);
   border: 1px solid var(--line);
-  background: #fffdf6;
+  background: var(--card);
   color: var(--ink);
   letter-spacing: .05em;
   font-weight: 500;
@@ -752,19 +755,19 @@ input[type="checkbox"] {
 }
 
 .theme-swatch-preview[data-swatch="b"] .theme-swatch-dot-1 {
-  background: #1f2937;
+  background: #14171c;
 }
 
 .theme-swatch-preview[data-swatch="b"] .theme-swatch-dot-2 {
-  background: #9ca3af;
+  background: #5b8def;
 }
 
 .theme-swatch-preview[data-swatch="c"] .theme-swatch-dot-1 {
-  background: #0d9488;
+  background: #16141f;
 }
 
 .theme-swatch-preview[data-swatch="c"] .theme-swatch-dot-2 {
-  background: #334155;
+  background: #9d7cf5;
 }
 
 .theme-swatch-preview[data-swatch="d"] .theme-swatch-dot-1 {
@@ -911,7 +914,7 @@ input[type="checkbox"] {
        that don't set their own color (e.g. .flashcard-stimulus) would keep
        inheriting the light theme's dark ink even after the dark scope above
        reassigns --ink, making the text unreadable against the dark card. */
-    color: var(--ink);
+  color: var(--ink);
 }
 
 .flashcard-topbar {
@@ -1049,18 +1052,3 @@ input[type="checkbox"] {
 [data-theme="c"] .flashcard-screen .explanation-box {
   background: rgba(255, 255, 255, 0.06);
 }
-
-[data-theme="b"] .input-number,
-[data-theme="b"] .answer-input {
-  background: var(--card-2);
-}
-
-[data-theme="b"] .select {
-  background-color: var(--card-2);
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="%23aab0ba" d="M7 10l5 5 5-5z"/></svg>');
-}
-
-[data-theme="b"] .explanation-box {
-  background: rgba(255, 255, 255, 0.06);
-}
-

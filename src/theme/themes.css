@@ -1,10 +1,16 @@
-/* IMPORTANT INVARIANT: every theme keeps --paper and --card as LIGHT surfaces,
-   and --ink as a DARK color that reads on both of them. Do not flip --ink to
-   a light color for a theme — that's what broke theme C the first time
-   around (it made the homepage title/dropdowns invisible along with
-   everything else that isn't the one component you actually wanted dark).
-   If a future theme wants a genuinely dark surface somewhere, scope a new
-   variable to that specific component instead of repurposing --ink globally. */
+/* INVARIANT (with one deliberate exception): every theme keeps --paper and
+   --card as LIGHT surfaces, and --ink as a DARK color that reads on both of
+   them, UNLESS the theme is meant to be dark app-wide (theme B) — in which
+   case every consumer of these tokens needs to have been checked for
+   hardcoded light-surface assumptions first (see App.css: .input-number,
+   .select, .answer-input, .explanation-box all used to hardcode a cream/
+   white background instead of reading --card, which is exactly what broke
+   theme C the first time this was tried — flipping --ink to light made the
+   homepage title/dropdowns invisible against those hardcoded backgrounds).
+   If a theme wants a dark surface in only ONE part of the app rather than
+   globally, don't repurpose --ink globally — scope new variable values to
+   that specific component instead, the way theme C's dark palette below is
+   scoped to .flashcard-screen and doesn't touch the rest of that theme. */
 
 /* Theme A — Washi: ink & paper, hanko stamp (this is just the :root defaults
    from App.css restated explicitly, so the four themes are easy to compare
@@ -34,25 +40,35 @@
     background: repeating-linear-gradient(90deg, transparent, transparent 39px, var(--line-soft) 39px, var(--line-soft) 40px), var(--card);
 }
 
-/* Theme B — Minimal: flat, quiet, no texture, no drama. */
+/* Theme B — Dark: a genuine dark theme, not a recolor of the Arcade shell.
+   This is a real exception to the "paper/card stay light" invariant at the
+   top of this file — that's fine here because this theme IS the dark theme,
+   applied globally, rather than one theme trying to have a dark corner while
+   the rest of the app assumes light surfaces. The tradeoff is the couple of
+   spots in App.css that used to hardcode a cream/white background instead of
+   reading `--card` (`.input-number`, `.select`, `.answer-input`) — those are
+   now variable-driven so they don't go invisible here. `.select`'s dropdown
+   arrow is a baked-in SVG data URI and can't read a CSS variable, so its fill
+   is overridden separately below. `.explanation-box`'s translucent white
+   lift also gets a dark-safe override below. */
 [data-theme="b"] {
-    --ink: #16181d;
-    --ink-soft: #4b515c;
-    --muted: #8b93a1;
-    --paper: #f7f8fa;
-    --card: #ffffff;
-    --card-2: #eef0f3;
-    --line: #dde1e7;
-    --line-soft: #e8eaee;
-    --accent: #2f6feb;
-    --accent-dark: #2557bd;
+    --ink: #e8eaf0;
+    --ink-soft: #b4bac7;
+    --muted: #7b8496;
+    --paper: #14171c;
+    --card: #1c2027;
+    --card-2: #242832;
+    --line: #2e333d;
+    --line-soft: #262a33;
+    --accent: #5b8def;
+    --accent-dark: #3f6fd1;
     --accent-ink: #ffffff;
-    --indigo: #16181d;
-    --good: #1a8f5a;
-    --bad: #d1403a;
-    --radius: 8px;
-    --radius-lg: 12px;
-    --shadow: 0 1px 2px rgba(16, 18, 22, .06);
+    --indigo: #b4bac7;
+    --good: #34d399;
+    --bad: #f87171;
+    --radius: 10px;
+    --radius-lg: 14px;
+    --shadow: 0 1px 0 rgba(0, 0, 0, .4), 0 12px 30px -14px rgba(0, 0, 0, .6);
 }
 
 [data-theme="b"] .stamp {
@@ -60,9 +76,18 @@
     animation: none;
 }
 
-/* Theme C — Flashcard: light, high-contrast, distinguished by its full-bleed
-   swipe layout rather than by inverting colors. Accent is teal to keep it
-   visually distinct from B (blue) and D (orange/green). */
+[data-theme="b"] .select {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="%23b4bac7" d="M7 10l5 5 5-5z"/></svg>');
+}
+
+[data-theme="b"] .explanation-box {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* Theme C — Flashcard: distinguished by its full-bleed swipe layout, with
+   the quiz view itself going dark (scoped below) while the settings/idle
+   screens stay on this light shell. Accent is violet, distinct from B (blue)
+   and D (orange/green). */
 [data-theme="c"] {
     --ink: #1c2024;
     --ink-soft: #4a5058;
@@ -72,8 +97,8 @@
     --card-2: #eef1f5;
     --line: #e0e4ea;
     --line-soft: #ececf1;
-    --accent: #0d9488;
-    --accent-dark: #0f766e;
+    --accent: #7c5cf0;
+    --accent-dark: #6a49dc;
     --accent-ink: #ffffff;
     --indigo: #334155;
     --good: #16a34a;
@@ -87,16 +112,38 @@
     border-top: 4px solid var(--accent);
 }
 
+/* The quiz view (.flashcard-screen) fully replaces the app shell in App.tsx
+   (showFlashcardView swaps out .container entirely) rather than nesting
+   inside it, so re-scoping the surface tokens here only darkens the quiz
+   itself — the settings sheet and idle screen, which use the shared shell,
+   stay on the light palette above. */
+[data-theme="c"] .flashcard-screen {
+    --ink: #e9e6f5;
+    --ink-soft: #b6b0cf;
+    --muted: #7d7799;
+    --paper: #16141f;
+    --card: #201d2e;
+    --card-2: #2a2640;
+    --line: #362f4d;
+    --line-soft: #2c2740;
+    --accent: #9d7cf5;
+    --accent-dark: #7c5cf0;
+    --accent-ink: #ffffff;
+    --indigo: #b6b0cf;
+    --good: #34d399;
+    --bad: #f87171;
+}
+
 /* Theme D — Arcade: bright, chunky, gamified. */
 [data-theme="d"] {
     --ink: #1f2933;
     --ink-soft: #3c4753;
     --muted: #8b95a1;
-    --paper: #fbfdff;
+    --paper: #dbeeff;
     --card: #ffffff;
-    --card-2: #eef8ff;
-    --line: #d6e4f0;
-    --line-soft: #e6f0f9;
+    --card-2: #c8e6ff;
+    --line: #a8d4f5;
+    --line-soft: #c3e2f5;
     --accent: #ff9600;
     --accent-dark: #e08600;
     --accent-ink: #ffffff;
