@@ -7,7 +7,6 @@ import { createQuestionsList, getEligibleWords } from './engine';
 import { quizReducer, checkIsCorrect, type QuizState } from './quizState';
 import { GROUP_META, getWordGroupLabel, type WordGroup } from './utils/wordGroups';
 import { ThemeProvider, useTheme } from './theme/ThemeContext';
-import { ThemeSelector } from './components/ThemeSelector';
 import { ThemeQuickSwitcher } from './components/ThemeQuickSwitcher.tsx';
 import { SettingsShell } from './components/SettingsShell';
 import { FlashcardQuiz } from './components/FlashcardQuiz';
